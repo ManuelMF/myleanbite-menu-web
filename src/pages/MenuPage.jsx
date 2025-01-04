@@ -1,38 +1,76 @@
-import { useEffect } from 'react';
-import { useMenu } from '../context/MenuContext';
-import { fetchMenu } from '../services/api';
+import React, { useState, useEffect } from "react";
+import { fetchMenu } from "../services/api";
+import Category from "../components/Menu/Category";
+import SubMenu from "../components/Menu/SubMenu";
+import CustomizeMenu from "../components/Menu/CustomizeMenu";
+import OrderSummary from "../components/Menu/OrderSummary";
+import './../styles/globals.css';
 
 const MenuPage = () => {
-  const { menu, setMenu } = useMenu();
+  const [menu, setMenu] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null); // Producto seleccionado
+  const [customizingItem, setCustomizingItem] = useState(null); // Personalizando
+  const [order, setOrder] = useState([]); // Pedido actual
+
+  const restaurantId = 2;
 
   useEffect(() => {
-    const getMenu = async () => {
+    const loadMenu = async () => {
       try {
-        const data = await fetchMenu(2); // ID del restaurante
+        const data = await fetchMenu(restaurantId);
         setMenu(data);
       } catch (error) {
-        console.error('Error fetching menu:', error);
+        console.error("Error al cargar el menú", error);
       }
     };
-    getMenu();
-  }, [setMenu]);
+    loadMenu();
+  }, [restaurantId]);
 
-  if (!menu) return <p>Loading...</p>;
+  const handleAddToOrder = (item, quantity) => {
+    const updatedOrder = [...order, { item, quantity }];
+    setOrder(updatedOrder);
+    setSelectedItem(null); // Cierra el submenú
+  };
+
+  const handleSaveCustomization = (ingredients) => {
+    console.log("Ingredientes seleccionados:", ingredients);
+    setCustomizingItem(null);
+  };
+
+  if (!menu) return <div className="loading">Cargando menú...</div>;
 
   return (
-    <div>
-      <h1>Menú</h1>
+    <div className="menu-page">
+      <h1 className="menu-title">{`Menú del Restaurante ${menu.restaurantId}`}</h1>
       {menu.categories.map((category) => (
-        <div key={category.posCategoryId}>
-          <h2>{category.name}</h2>
-          {category.items.map((item) => (
-            <div key={item.posId}>
-              <h3>{item.name} - ${item.price.toFixed(2)}</h3>
-              <p>{item.description || 'Sin descripción'}</p>
-            </div>
-          ))}
-        </div>
+        <Category
+          key={category.posCategoryId}
+          category={category}
+          onSelectItem={setSelectedItem}
+        />
       ))}
+
+      {selectedItem && (
+        <SubMenu
+          item={selectedItem}
+          onClose={() => setSelectedItem(null)}
+          onCustomize={() => {
+            setCustomizingItem(selectedItem);
+            setSelectedItem(null);
+          }}
+          onAddToOrder={handleAddToOrder}
+        />
+      )}
+
+      {customizingItem && (
+        <CustomizeMenu
+          item={customizingItem}
+          onClose={() => setCustomizingItem(null)}
+          onSave={handleSaveCustomization}
+        />
+      )}
+
+      <OrderSummary order={order} />
     </div>
   );
 };

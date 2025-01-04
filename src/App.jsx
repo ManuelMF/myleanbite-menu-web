@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { MenuProvider } from './context/MenuContext';
-import Home from './pages/Home';
-import MenuPage from './pages/MenuPage';
-import NotFound from './pages/NotFound';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { MenuProvider } from "./context/MenuContext";
+import Home from "./pages/Home";
+import MenuPage from "./pages/MenuPage";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
