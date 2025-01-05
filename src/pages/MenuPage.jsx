@@ -4,7 +4,7 @@ import Category from "../components/Menu/Category";
 import SubMenu from "../components/Menu/SubMenu";
 import CustomizeMenu from "../components/Menu/CustomizeMenu";
 import OrderSummary from "../components/Menu/OrderSummary";
-import './../styles/globals.css';
+import './../styles/base.css';
 
 const MenuPage = () => {
   const [menu, setMenu] = useState(null);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './../../styles/globals.css';
+import '../../styles/submenu.css';
 
 const CustomizeMenu = ({ item, onClose, onSave }) => {
   const [ingredientQuantities, setIngredientQuantities] = useState(

@@ -1,5 +1,5 @@
 import React from "react";
-import './../../styles/globals.css'; 
+import '../../styles/submenu.css';
 
 const Category = ({ category, onSelectItem }) => { // Cambiar onItemClick a onSelectItem
   return (

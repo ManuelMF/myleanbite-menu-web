@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ExtraSelector from "./ExtraSelector";
 import DrinkSelector from "./DrinkSelector";
-import './../../styles/globals.css'; 
+import '../../styles/submenu.css';
 
 const ItemCard = ({ item }) => {
   const [selectedExtras, setSelectedExtras] = useState([]);
