@@ -11,6 +11,7 @@ const MenuPage = () => {
   const [selectedItem, setSelectedItem] = useState(null); // Producto seleccionado
   const [customizingItem, setCustomizingItem] = useState(null); // Personalizando
   const [order, setOrder] = useState([]); // Pedido actual
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false); // Estado para controlar el fondo blanco
 
   const restaurantId = 2;
 
@@ -30,11 +31,24 @@ const MenuPage = () => {
     const updatedOrder = [...order, { item, quantity }];
     setOrder(updatedOrder);
     setSelectedItem(null); // Cierra el submenú
+    setIsSubMenuOpen(false); // Cierra el fondo blanco
   };
 
   const handleSaveCustomization = (ingredients) => {
     console.log("Ingredientes seleccionados:", ingredients);
     setCustomizingItem(null);
+    setIsSubMenuOpen(false); // Cierra el fondo blanco después de personalizar
+  };
+
+  const handleCloseSubMenu = () => {
+    setSelectedItem(null); // Cierra el submenu
+    setIsSubMenuOpen(false); // Cierra el fondo blanco
+  };
+
+  const handleCustomize = (item) => {
+    setCustomizingItem(item);
+    setSelectedItem(null); // Cierra el submenú principal
+    setIsSubMenuOpen(false); // Cierra el fondo blanco cuando empieza la personalización
   };
 
   if (!menu) return <div className="loading">Cargando menú...</div>;
@@ -46,26 +60,31 @@ const MenuPage = () => {
         <Category
           key={category.posCategoryId}
           category={category}
-          onSelectItem={setSelectedItem}
+          onSelectItem={(item) => {
+            setSelectedItem(item);
+            setIsSubMenuOpen(true); // Abre el submenú principal
+          }}
         />
       ))}
 
+      {/* Fondo blanco cuando el submenu está abierto */}
+      {isSubMenuOpen && <div className="submenu-overlay" onClick={handleCloseSubMenu}></div>}
+
+      {/* Submenu principal */}
       {selectedItem && (
         <SubMenu
           item={selectedItem}
-          onClose={() => setSelectedItem(null)}
-          onCustomize={() => {
-            setCustomizingItem(selectedItem);
-            setSelectedItem(null);
-          }}
+          onClose={handleCloseSubMenu}
+          onCustomize={() => handleCustomize(selectedItem)} // Abre el submenú de personalización
           onAddToOrder={handleAddToOrder}
         />
       )}
 
+      {/* Submenú de personalización */}
       {customizingItem && (
         <CustomizeMenu
           item={customizingItem}
-          onClose={() => setCustomizingItem(null)}
+          onClose={() => setCustomizingItem(null)} // Cierra el submenú de personalización
           onSave={handleSaveCustomization}
         />
       )}
