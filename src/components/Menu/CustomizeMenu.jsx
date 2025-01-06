@@ -1,13 +1,27 @@
 import React, { useState } from "react";
-import '../../styles/submenu.css';
+import "../../styles/customizeMenu.css";
 
 const CustomizeMenu = ({ item, onClose, onSave }) => {
-  const [ingredientQuantities, setIngredientQuantities] = useState(
-    item.ingredientsDTO.map((ingredient) => ({
+  const itemList =
+    item.ingredientsDTO?.map((ingredient, i) => ({
       ...ingredient,
+      quantity: 1,
+      key: i,
+    })) || [];
+
+  const extrasList =
+    item.extrasDTO?.map((extra, i) => ({
+      ...extra,
       quantity: 0,
-    }))
-  );
+      key: (itemList.length || 0) + i,
+    })) || [];
+
+  const [ingredientQuantities, setIngredientQuantities] = useState([
+    ...itemList,
+    ...extrasList,
+  ]);
+
+  console.log(item);
 
   const handleIngredientChange = (ingredientId, action) => {
     setIngredientQuantities((prev) =>
@@ -30,12 +44,11 @@ const CustomizeMenu = ({ item, onClose, onSave }) => {
   return (
     <div className="customize-menu">
       <div className="customize-content">
-        <button className="close-btn" onClick={onClose}>✖</button>
         <h2 className="customize-title">Personaliza {item.name}</h2>
 
         <div className="ingredients-list">
           {ingredientQuantities.map((ingredient) => (
-            <div key={ingredient.productId} className="ingredient-item">
+            <div key={ingredient.key} className="ingredient-item">
               <span>{ingredient.name}</span>
               <div className="ingredient-controls">
                 <button
@@ -61,7 +74,9 @@ const CustomizeMenu = ({ item, onClose, onSave }) => {
         </div>
 
         <div className="action-buttons">
-          <button className="cancel-btn" onClick={onClose}>Cancelar</button>
+          <button className="cancel-btn" onClick={onClose}>
+            Cancelar
+          </button>
           <button
             className="save-btn"
             onClick={() => onSave(ingredientQuantities)}

@@ -68,7 +68,7 @@
 .quantity-controls {
   display: flex;
   justify-content: center;
-  align-items: center; /* Alineación vertical de los botones */
+  align-items: center; /* Centra el contenido verticalmente */
   width: 100%;
   margin: 0;
   padding: 0;
@@ -79,21 +79,23 @@
 }
 
 .control-btn {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
   width: 40px;
   height: 40px;
   font-size: 1.4rem;
-  display: flex;
-  justify-content: center; /* Alineación horizontal */
-  align-items: center; /* Alineación vertical */
   background: transparent;
   border: 1px solid transparent;
   cursor: pointer;
+  padding: 0; /* Elimina cualquier padding adicional */
+  margin: 0; /* Elimina cualquier margen adicional */
 }
 
 .quantity-display {
   width: 90px;
   height: 40px;
-  line-height: 40px; /* Centra el texto verticalmente */
+  line-height: 40px; /* Centra el texto verticalmente dentro del contenedor */
   text-align: center;
   background: #fff;
   border: 1px solid #ddd;
@@ -102,6 +104,7 @@
   box-sizing: border-box;
   margin: 0;
 }
+
 
 
 
