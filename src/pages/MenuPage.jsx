@@ -5,6 +5,7 @@ import SubMenu from "../components/Menu/SubMenu";
 import CustomizeMenu from "../components/Menu/CustomizeMenu";
 import OrderSummary from "../components/Menu/OrderSummary";
 import "./../styles/base.css";
+import "./../styles/notification.css";
 
 const MenuPage = () => {
   const [menu, setMenu] = useState(null);
@@ -14,6 +15,7 @@ const MenuPage = () => {
   const [extrasItem, setExtras] = useState(null); // Personalizando
   const [order, setOrder] = useState([]); // Pedido actual
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false); // Estado para controlar el fondo blanco
+  const [showNotification, setShowNotification] = useState(null); // Controla la notificación
 
   const restaurantId = 2;
 
@@ -38,6 +40,15 @@ const MenuPage = () => {
     setOrder(updatedOrder);
     setSelectedItem(null); // Cierra el submenú
     setIsSubMenuOpen(false); // Cierra el fondo blanco
+
+    // Muestra la notificación
+    setShowNotification({ item, quantity });
+
+    // Oculta la notificación después de 2 segundos
+    setTimeout(() => {
+      setShowNotification(null);
+    }, 2500);
+
     setIngredients(null);
     setExtras(null);
   };
@@ -46,10 +57,16 @@ const MenuPage = () => {
     setSelectedItem(customizingItem);
     setIngredients(ingredients);
     setExtras(extras);
-    setCustomizingItem(null); //cerrar panel
+    setCustomizingItem(null); // Cierra el panel
+  };
+
+  const handleCancelCustomization = () => {
+    setSelectedItem(customizingItem);
+    setCustomizingItem(null);
   };
 
   const handleCloseSubMenu = () => {
+    console.log("entraa");
     setSelectedItem(null); // Cierra el submenu
     setIsSubMenuOpen(false); // Cierra el fondo blanco
     setCustomizingItem(null);
@@ -101,12 +118,35 @@ const MenuPage = () => {
           item={customizingItem}
           ingredients={ingredientsItem}
           extras={extrasItem}
-          onClose={() => setCustomizingItem(null)} // Cierra el submenú de personalización
+          onClose={handleCancelCustomization} // Cierra el submenú de personalización
           onSave={handleSaveCustomization}
         />
       )}
 
       <OrderSummary order={order} />
+
+      {/* Notificación de pantalla completa */}
+      {showNotification && (
+        <div className="notification-overlay">
+          <div className="notification-message">
+            <img
+              src="/images/item-added.gif" /* Reemplaza por la ruta de tu imagen animada */
+              alt="Item añadido"
+              className="notification-image"
+            />
+            <div className="notification-text">
+              <h2>¡Artículo añadido a tu pedido!</h2>
+              <p>Tu total se ha actualizado</p>
+              <p>
+                {(
+                  showNotification.item.price * showNotification.quantity
+                ).toFixed(2)}{" "}
+                €
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

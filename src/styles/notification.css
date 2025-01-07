@@ -1,0 +1,51 @@
+/* Ajustes generales del overlay */
+.notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden; /* Asegura que no haya scroll */
+  }
+  
+  .notification-message {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    max-width: 90%; /* Limita el ancho del panel al 90% del viewport */
+    width: 400px; /* Ancho máximo para pantallas grandes */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: slideIn 0.5s ease-in-out, fadeOut 1.5s ease-in 1.5s;
+    position: relative;
+  }
+  
+  /* Ajustes para pantallas pequeñas */
+  @media (max-width: 480px) {
+    .notification-message {
+      padding: 20px; /* Reduce el padding */
+      max-width: 95%; /* Amplía un poco más en pantallas pequeñas */
+      width: auto; /* Ajusta el ancho según el contenido */
+    }
+  
+    .notification-message h2 {
+      font-size: 1.5rem; /* Ajusta el tamaño del texto */
+    }
+  
+    .notification-message p {
+      font-size: 1.2rem;
+    }
+  
+    .notification-image {
+      width: 120px; /* Reduce el tamaño de la imagen */
+    }
+  }
+  

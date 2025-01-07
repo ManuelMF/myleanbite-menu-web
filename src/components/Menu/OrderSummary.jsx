@@ -2,7 +2,6 @@ import React from "react";
 import "../../styles/submenu.css";
 
 const OrderSummary = ({ order }) => {
-  console.log("🚀 ~ OrderSummary ~ order:", order);
   const totalPrice = order.reduce((total, { item, extrasItem, quantity }) => {
     const extrasTotal = extrasItem
       ? extrasItem.reduce((sum, extra) => sum + extra.price * extra.quantity, 0)
