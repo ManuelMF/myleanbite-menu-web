@@ -1,53 +1,61 @@
 /* Global Styles */
 body {
   font-family: 'Playfair Display', serif;
-  background: #faf8f6;
-  color: #333;
+  background: #f9f4ef; /* Fondo más cálido */
+  color: #2c2c2c; /* Texto más oscuro */
+  margin: 0;
+  padding: 0;
 }
 
 .menu-page {
-  padding: 15px;
-  max-width: 100%;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .menu-title {
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   text-align: center;
-  color: #444;
-  margin-bottom: 20px;
+  color: #5a4238;
+  margin-bottom: 30px;
   font-family: 'Cormorant Garamond', serif;
+  border-bottom: 3px solid #d6cfc7;
+  padding-bottom: 10px;
 }
 
 .category {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .category-title {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #444;
-  margin-bottom: 10px;
+  color: #5a4238;
+  margin-bottom: 15px;
   text-transform: uppercase;
-  border-bottom: 2px solid #ddd;
+  border-left: 5px solid #d6cfc7;
+  padding-left: 10px;
 }
 
 .category-items {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Mejor distribución */
+  gap: 15px;
 }
 
 .menu-item {
-  background: #fff;
-  padding: 10px;
-  border-radius: 8px;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 12px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .menu-item:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .menu-item span {
@@ -56,10 +64,92 @@ body {
 
 .item-name {
   font-weight: bold;
+  font-size: 1.2rem;
   margin-bottom: 5px;
 }
 
 .item-price {
   font-size: 1.1rem;
-  color: #888;
+  color: #757575;
+}
+
+/* Notification Overlay */
+.notification-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.notification-message {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeInScale 0.5s ease-out;
+}
+
+.notification-image {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.notification-text h2 {
+  font-size: 1.8rem;
+  color: #5a4238;
+  margin-bottom: 10px;
+}
+
+.notification-text p {
+  font-size: 1.2rem;
+  color: #2c2c2c;
+}
+
+/* Animation for the notification */
+@keyframes fadeInScale {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .menu-title {
+    font-size: 2rem;
+  }
+
+  .category-title {
+    font-size: 1.5rem;
+  }
+
+  .menu-item {
+    padding: 10px;
+  }
+
+  .item-name {
+    font-size: 1.1rem;
+  }
+
+  .item-price {
+    font-size: 1rem;
+  }
+
+  .notification-message {
+    padding: 20px;
+  }
 }
