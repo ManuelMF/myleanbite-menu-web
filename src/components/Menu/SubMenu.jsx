@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import "../../styles/submenu.css";
 
-const SubMenu = ({ item, onClose, onCustomize, onAddToOrder }) => {
+const SubMenu = ({
+  item,
+  extras,
+  ingredients,
+  onClose,
+  onCustomize,
+  onAddToOrder,
+}) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleDecrease = () => {
@@ -12,11 +19,25 @@ const SubMenu = ({ item, onClose, onCustomize, onAddToOrder }) => {
     setQuantity(quantity + 1);
   };
 
+  const extrasPrice =
+    extras &&
+    extras.reduce((act, extra) => act + extra.price * extra.quantity, 0);
+
+  const isAPersonifiedItem = (ingredients, extras) => {
+    return (
+      (ingredients &&
+        ingredients.some((ingredient) => ingredient.quantity == 0)) ||
+      (extras && extras.some((extra) => extra.quantity > 0))
+    );
+  };
+
   return (
     <div className="submenu">
       <div className="submenu-content">
         <h2 className="submenu-title">{item.name}</h2>
-        <p className="submenu-price">{item.price.toFixed(2)} €</p>
+        <p className="submenu-price">
+          {(item.price + extrasPrice).toFixed(2)} €
+        </p>
 
         <button className="customize-btn" onClick={onCustomize}>
           Personalizar
@@ -31,7 +52,11 @@ const SubMenu = ({ item, onClose, onCustomize, onAddToOrder }) => {
             -
           </button>
           <div className="quantity-display">{quantity}</div>
-          <button className="control-btn" onClick={handleIncrease}>
+          <button
+            className="control-btn"
+            onClick={handleIncrease}
+            disabled={isAPersonifiedItem(ingredients, extras)}
+          >
             +
           </button>
         </div>

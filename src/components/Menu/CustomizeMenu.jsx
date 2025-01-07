@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import "../../styles/customizeMenu.css";
 
-const CustomizeMenu = ({ item, onClose, onSave }) => {
-  const itemList =
-    item.ingredientsDTO?.map((ingredient, i) => ({
-      ...ingredient,
-      quantity: 1,
-      key: i,
-    })) || [];
+const CustomizeMenu = ({ item, ingredients, extras, onClose, onSave }) => {
+  const ingredientsList = ingredients
+    ? ingredients
+    : item.ingredientsDTO?.map((ingredient, i) => ({
+        ...ingredient,
+        quantity: 1,
+        key: i,
+      })) || [];
 
-  const extrasList =
-    item.extrasDTO?.map((extra, i) => ({
-      ...extra,
-      quantity: 0,
-      key: (itemList.length || 0) + i,
-    })) || [];
+  const extrasList = extras
+    ? extras
+    : item.extrasDTO?.map((extra, i) => ({
+        ...extra,
+        quantity: 0,
+        key: (ingredientsList.length || 0) + i,
+      })) || [];
 
-  const [ingredientQuantities, setIngredientQuantities] = useState(itemList);
+  const [ingredientQuantities, setIngredientQuantities] =
+    useState(ingredientsList);
   const [extrasQuantities, setExtrasQuantities] = useState(extrasList);
 
   const handleIngredientChange = (ingredientId, action) => {
@@ -115,7 +118,7 @@ const CustomizeMenu = ({ item, onClose, onSave }) => {
           </button>
           <button
             className="add-btn"
-            onClick={() => onSave(ingredientQuantities)}
+            onClick={() => onSave(ingredientQuantities, extrasQuantities)}
           >
             Guardar cambios
           </button>
