@@ -1,7 +1,8 @@
 import React from "react";
-import '../../styles/submenu.css';
+import "../../styles/submenu.css";
 
-const Category = ({ category, onSelectItem }) => { // Cambiar onItemClick a onSelectItem
+const Category = ({ category, onSelectItem }) => {
+  // Cambiar onItemClick a onSelectItem
   return (
     <div className="category">
       <h2 className="category-title">{category.name}</h2>
@@ -13,7 +14,7 @@ const Category = ({ category, onSelectItem }) => { // Cambiar onItemClick a onSe
             onClick={() => onSelectItem(item)} // Cambiar onItemClick por onSelectItem
           >
             <span className="item-name">{item.name}</span>
-            <span className="item-price">${item.price.toFixed(2)}</span>
+            <span className="item-price">{item.price.toFixed(2)} €</span>
           </div>
         ))}
       </div>

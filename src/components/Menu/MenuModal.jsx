@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../styles/submenu.css';
+import "../../styles/submenu.css";
 
 const MenuModal = ({ item, onClose, onAddToOrder }) => {
   const [ingredientQuantities, setIngredientQuantities] = useState(
@@ -90,7 +90,7 @@ const MenuModal = ({ item, onClose, onAddToOrder }) => {
                         )
                       }
                     />
-                    {extra.name} (+${extra.price.toFixed(2)})
+                    {extra.name} (+{extra.price.toFixed(2)} €)
                   </label>
                 </li>
               ))}

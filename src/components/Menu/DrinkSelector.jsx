@@ -1,6 +1,5 @@
 import React from "react";
-import '../../styles/submenu.css';
-
+import "../../styles/submenu.css";
 
 const DrinkSelector = ({ onSelect }) => {
   const drinks = [
@@ -17,7 +16,7 @@ const DrinkSelector = ({ onSelect }) => {
         {drinks.map((drink) => (
           <li key={drink.id}>
             <button className="drink-btn" onClick={() => onSelect(drink)}>
-              {drink.name} (+${drink.price})
+              {drink.name} (+{drink.price} €)
             </button>
           </li>
         ))}

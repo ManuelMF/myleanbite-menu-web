@@ -1,5 +1,5 @@
 import React from "react";
-import '../../styles/submenu.css';
+import "../../styles/submenu.css";
 
 const OrderSummary = ({ order }) => {
   const totalPrice = order.reduce(
@@ -19,7 +19,7 @@ const OrderSummary = ({ order }) => {
           <li key={index}>{item.name}</li>
         ))}
       </ul>
-      <p>Total: ${totalPrice.toFixed(2)}</p>
+      <p>Total: {totalPrice.toFixed(2)} €</p>
       <button className="finish-btn">Finalizar Pedido</button>
     </div>
   );

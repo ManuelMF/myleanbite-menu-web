@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ExtraSelector from "./ExtraSelector";
 import DrinkSelector from "./DrinkSelector";
-import '../../styles/submenu.css';
+import "../../styles/submenu.css";
 
 const ItemCard = ({ item }) => {
   const [selectedExtras, setSelectedExtras] = useState([]);
@@ -19,10 +19,15 @@ const ItemCard = ({ item }) => {
     <div className="item-card">
       <h3>{item.name}</h3>
       <p>{item.description || "Sin descripción"}</p>
-      <p><strong>${item.price}</strong></p>
+      <p>
+        <strong>{item.price} €</strong>
+      </p>
 
       {item.extrasDTO && (
-        <ExtraSelector extras={item.extrasDTO} onSelect={handleExtraSelection} />
+        <ExtraSelector
+          extras={item.extrasDTO}
+          onSelect={handleExtraSelection}
+        />
       )}
 
       <div className="ingredients">
@@ -32,7 +37,7 @@ const ItemCard = ({ item }) => {
             <ul>
               {item.ingredientsDTO.map((ingredient) => (
                 <li key={ingredient.productId}>
-                  {ingredient.name} (+${ingredient.price})
+                  {ingredient.name} (+{ingredient.price} €)
                 </li>
               ))}
             </ul>

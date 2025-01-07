@@ -4,7 +4,7 @@ import Category from "../components/Menu/Category";
 import SubMenu from "../components/Menu/SubMenu";
 import CustomizeMenu from "../components/Menu/CustomizeMenu";
 import OrderSummary from "../components/Menu/OrderSummary";
-import './../styles/base.css';
+import "./../styles/base.css";
 
 const MenuPage = () => {
   const [menu, setMenu] = useState(null);
@@ -68,7 +68,9 @@ const MenuPage = () => {
       ))}
 
       {/* Fondo blanco cuando el submenu está abierto */}
-      {isSubMenuOpen && <div className="submenu-overlay" onClick={handleCloseSubMenu}></div>}
+      {isSubMenuOpen && (
+        <div className="submenu-overlay" onClick={handleCloseSubMenu}></div>
+      )}
 
       {/* Submenu principal */}
       {selectedItem && (

@@ -1,5 +1,5 @@
 import React from "react";
-import '../../styles/submenu.css';
+import "../../styles/submenu.css";
 
 const ExtraSelector = ({ extras, onSelect }) => {
   return (
@@ -9,7 +9,7 @@ const ExtraSelector = ({ extras, onSelect }) => {
         {extras.map((extra) => (
           <li key={extra.productId}>
             <button className="extra-btn" onClick={() => onSelect(extra)}>
-              {extra.name} (+${extra.price})
+              {extra.name} (+{extra.price} €)
             </button>
           </li>
         ))}

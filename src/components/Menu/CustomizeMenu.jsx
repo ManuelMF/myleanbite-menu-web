@@ -16,12 +16,8 @@ const CustomizeMenu = ({ item, onClose, onSave }) => {
       key: (itemList.length || 0) + i,
     })) || [];
 
-  const [ingredientQuantities, setIngredientQuantities] = useState([
-    ...itemList,
-    ...extrasList,
-  ]);
-
-  console.log(item);
+  const [ingredientQuantities, setIngredientQuantities] = useState(itemList);
+  const [extrasQuantities, setExtrasQuantities] = useState(extrasList);
 
   const handleIngredientChange = (ingredientId, action) => {
     setIngredientQuantities((prev) =>
@@ -40,6 +36,23 @@ const CustomizeMenu = ({ item, onClose, onSave }) => {
       )
     );
   };
+  const handleExtraChange = (extraId, action) => {
+    setExtrasQuantities((prev) =>
+      prev.map((extra) =>
+        extra.productId === extraId
+          ? {
+              ...extra,
+              quantity:
+                action === "increase"
+                  ? extra.quantity + 1
+                  : extra.quantity > 0
+                  ? extra.quantity - 1
+                  : 0,
+            }
+          : extra
+      )
+    );
+  };
 
   return (
     <div className="customize-menu">
@@ -53,6 +66,7 @@ const CustomizeMenu = ({ item, onClose, onSave }) => {
               <div className="ingredient-controls">
                 <button
                   className="control-btn"
+                  disabled={ingredient.quantity == 0}
                   onClick={() =>
                     handleIngredientChange(ingredient.productId, "decrease")
                   }
@@ -61,6 +75,7 @@ const CustomizeMenu = ({ item, onClose, onSave }) => {
                 </button>
                 <span className="quantity">{ingredient.quantity}</span>
                 <button
+                  disabled={ingredient.quantity == 1}
                   className="control-btn"
                   onClick={() =>
                     handleIngredientChange(ingredient.productId, "increase")
@@ -71,14 +86,35 @@ const CustomizeMenu = ({ item, onClose, onSave }) => {
               </div>
             </div>
           ))}
+          {extrasQuantities.map((extra) => (
+            <div key={extra.key} className="ingredient-item">
+              <span>{extra.name + " (" + extra.price + " €)"}</span>
+              <div className="ingredient-controls">
+                <button
+                  className="control-btn"
+                  disabled={extra.quantity == 0}
+                  onClick={() => handleExtraChange(extra.productId, "decrease")}
+                >
+                  -
+                </button>
+                <span className="quantity">{extra.quantity}</span>
+                <button
+                  className="control-btn"
+                  onClick={() => handleExtraChange(extra.productId, "increase")}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-
-        <div className="action-buttons">
+        <br />
+        <div className="submenu-footer">
           <button className="cancel-btn" onClick={onClose}>
             Cancelar
           </button>
           <button
-            className="save-btn"
+            className="add-btn"
             onClick={() => onSave(ingredientQuantities)}
           >
             Guardar cambios

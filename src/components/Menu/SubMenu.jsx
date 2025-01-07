@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../styles/submenu.css';
+import "../../styles/submenu.css";
 
 const SubMenu = ({ item, onClose, onCustomize, onAddToOrder }) => {
   const [quantity, setQuantity] = useState(1);
@@ -16,14 +16,18 @@ const SubMenu = ({ item, onClose, onCustomize, onAddToOrder }) => {
     <div className="submenu">
       <div className="submenu-content">
         <h2 className="submenu-title">{item.name}</h2>
-        <p className="submenu-price">${item.price.toFixed(2)}</p>
+        <p className="submenu-price">{item.price.toFixed(2)} €</p>
 
         <button className="customize-btn" onClick={onCustomize}>
           Personalizar
         </button>
 
         <div className="quantity-controls">
-          <button className="control-btn" onClick={handleDecrease} disabled={quantity === 1}>
+          <button
+            className="control-btn"
+            onClick={handleDecrease}
+            disabled={quantity === 1}
+          >
             -
           </button>
           <div className="quantity-display">{quantity}</div>
@@ -37,7 +41,10 @@ const SubMenu = ({ item, onClose, onCustomize, onAddToOrder }) => {
         <button className="cancel-btn" onClick={onClose}>
           Cancelar
         </button>
-        <button className="add-btn" onClick={() => onAddToOrder(item, quantity)}>
+        <button
+          className="add-btn"
+          onClick={() => onAddToOrder(item, quantity)}
+        >
           Añadir a la orden
         </button>
       </div>
