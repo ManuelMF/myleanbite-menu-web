@@ -41,13 +41,19 @@ const MenuPage = () => {
     setSelectedItem(null); // Cierra el submenú
     setIsSubMenuOpen(false); // Cierra el fondo blanco
 
-    // Muestra la notificación
-    setShowNotification({ item, quantity });
+    const extrasPrice = extrasItem.reduce(
+      (act, extra) => act + extra.price * extra.quantity,
+      0
+    );
 
-    // Oculta la notificación después de 2 segundos
+    const totalPrice = item.price * quantity + extrasPrice;
+
+    // Muestra la notificación
+    setShowNotification(totalPrice);
+
     setTimeout(() => {
       setShowNotification(null);
-    }, 2500);
+    }, 1000);
 
     setIngredients(null);
     setExtras(null);
@@ -130,19 +136,14 @@ const MenuPage = () => {
         <div className="notification-overlay">
           <div className="notification-message">
             <img
-              src="/images/item-added.gif" /* Reemplaza por la ruta de tu imagen animada */
+              src="/notification-image.gif" // Use the path relative to the public folder
               alt="Item añadido"
               className="notification-image"
             />
             <div className="notification-text">
               <h2>¡Artículo añadido a tu pedido!</h2>
               <p>Tu total se ha actualizado</p>
-              <p>
-                {(
-                  showNotification.item.price * showNotification.quantity
-                ).toFixed(2)}{" "}
-                €
-              </p>
+              <p>{showNotification.toFixed(2)} €</p>
             </div>
           </div>
         </div>
