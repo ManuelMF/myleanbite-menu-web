@@ -72,7 +72,6 @@ const MenuPage = () => {
   };
 
   const handleCloseSubMenu = () => {
-    console.log("entraa");
     setSelectedItem(null); // Cierra el submenu
     setIsSubMenuOpen(false); // Cierra el fondo blanco
     setCustomizingItem(null);
