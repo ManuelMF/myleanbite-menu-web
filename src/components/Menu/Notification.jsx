@@ -1,4 +1,9 @@
-const Notificacion = ({ showNotification }) => {
+import { useMenu } from "../../context/MenuContext";
+
+const Notificacion = () => {
+  const { state } = useMenu();
+  const { showNotification } = state;
+
   if (!showNotification) return null;
 
   return (

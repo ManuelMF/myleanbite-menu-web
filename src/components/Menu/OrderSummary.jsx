@@ -1,7 +1,11 @@
 import React from "react";
 import "../../styles/submenu.css";
+import { useMenu } from "../../context/MenuContext";
 
-const OrderSummary = ({ order }) => {
+const OrderSummary = () => {
+  const { state } = useMenu();
+  const { order } = state;
+
   const totalPrice = order.reduce(
     (total, { selectedItem, extras, quantity }) => {
       const extrasTotal = extras

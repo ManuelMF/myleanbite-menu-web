@@ -10,7 +10,7 @@ import Loading from "../components/Layout/Loading";
 
 const MenuPage = () => {
   const { state, dispatch } = useMenu();
-  const { menu, order, showNotification } = state;
+  const { menu } = state;
 
   const restaurantId = 2;
 
@@ -26,27 +26,20 @@ const MenuPage = () => {
     loadMenu();
   }, [restaurantId]);
 
-  const handleOpenSubmenu = (item) => {
-    dispatch({ type: "SET_SELECTED_ITEM", payload: item });
-  };
-
   if (!menu) return <Loading />;
 
   return (
     <div className="menu-page">
       <h1 className="menu-title">{`Menú del Restaurante ${menu.restaurantId}`}</h1>
-      <MenuCategoryList
-        categories={menu.categories}
-        onSelectCategory={handleOpenSubmenu}
-      />
+      <MenuCategoryList />
 
       <SubMenuWrapper />
 
       <CustomizeMenu />
 
-      <OrderSummary order={order} />
+      <OrderSummary />
 
-      <Notification showNotification={showNotification} />
+      <Notification />
     </div>
   );
 };
