@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useMenu } from "../context/MenuContext";
 import { fetchMenu } from "../services/api";
-import Category from "../components/Menu/Category";
-import SubMenu from "../components/Menu/SubMenu";
+import MenuCategoryList from "../components/Menu/MenuCategoryList";
+import SubMenuWrapper from "../components/Menu/SubMenuWrapper";
 import CustomizeMenu from "../components/Menu/CustomizeMenu";
 import OrderSummary from "../components/Menu/OrderSummary";
-import "./../styles/base.css";
-import "./../styles/notification.css";
-import { useMenu } from "../context/MenuContext";
+import Notification from "../components/Menu/Notification";
+import Loading from "../components/Layout/Loading";
 
 const MenuPage = () => {
   const { state, dispatch } = useMenu();
@@ -79,66 +79,34 @@ const MenuPage = () => {
     dispatch({ type: "CUSTOMIZE_ITEM", payload: item });
   };
 
-  if (!menu) return <div className="loading">Cargando menú...</div>;
+  if (!menu) return <Loading />;
 
   return (
     <div className="menu-page">
       <h1 className="menu-title">{`Menú del Restaurante ${menu.restaurantId}`}</h1>
-      {menu.categories.map((category) => (
-        <Category
-          key={category.posCategoryId}
-          category={category}
-          onSelectItem={(item) => handleOpenSubmenu(item)}
-        />
-      ))}
-
-      {/* Fondo blanco cuando el submenu está abierto */}
-      {isSubMenuOpen && (
-        <div className="submenu-overlay" onClick={handleCloseSubMenu}></div>
-      )}
-
-      {/* Submenu principal */}
-      {selectedItem && (
-        <SubMenu
-          item={selectedItem}
-          extras={extrasItem}
-          ingredients={ingredientsItem}
-          onClose={handleCloseSubMenu}
-          onCustomize={() => handleCustomize(selectedItem)} // Abre el submenú de personalización
-          onAddToOrder={handleAddToOrder}
-        />
-      )}
-
-      {/* Submenú de personalización */}
-      {customizingItem && (
-        <CustomizeMenu
-          item={customizingItem}
-          ingredients={ingredientsItem}
-          extras={extrasItem}
-          onClose={handleCancelCustomization} // Cierra el submenú de personalización
-          onSave={handleSaveCustomization}
-        />
-      )}
-
+      <MenuCategoryList
+        categories={menu.categories}
+        onSelectCategory={handleOpenSubmenu}
+      />
+      <SubMenuWrapper
+        isSubMenuOpen={isSubMenuOpen}
+        selectedItem={selectedItem}
+        extrasItem={extrasItem}
+        ingredientsItem={ingredientsItem}
+        onClose={handleCloseSubMenu}
+        onCustomize={() => handleCustomize(selectedItem)}
+        onAddToOrder={handleAddToOrder}
+      />
+      <CustomizeMenu
+        item={customizingItem}
+        ingredients={ingredientsItem}
+        extras={extrasItem}
+        onClose={handleCancelCustomization}
+        onSave={handleSaveCustomization}
+      />
       <OrderSummary order={order} />
 
-      {/* Notificación de pantalla completa */}
-      {showNotification && (
-        <div className="notification-overlay">
-          <div className="notification-message">
-            <img
-              src="/notification-image.gif" // Use the path relative to the public folder
-              alt="Item añadido"
-              className="notification-image"
-            />
-            <div className="notification-text">
-              <h2>¡Artículo añadido a tu pedido!</h2>
-              <p>Tu total se ha actualizado</p>
-              <p>{showNotification.toFixed(2)} €</p>
-            </div>
-          </div>
-        </div>
-      )}
+      <Notification showNotification={showNotification} />
     </div>
   );
 };

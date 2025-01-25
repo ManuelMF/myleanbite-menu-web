@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../../styles/customizeMenu.css";
 
 const CustomizeMenu = ({ item, ingredients, extras, onClose, onSave }) => {
+  if (!item) return null;
+
   const ingredientsList = ingredients
     ? ingredients
     : item.ingredientsDTO?.map((ingredient, i) => ({
