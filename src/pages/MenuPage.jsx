@@ -6,16 +6,20 @@ import CustomizeMenu from "../components/Menu/CustomizeMenu";
 import OrderSummary from "../components/Menu/OrderSummary";
 import "./../styles/base.css";
 import "./../styles/notification.css";
+import { useMenu } from "../context/MenuContext";
 
 const MenuPage = () => {
-  const [menu, setMenu] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null); // Producto seleccionado
-  const [customizingItem, setCustomizingItem] = useState(null); // Personalizando
-  const [ingredientsItem, setIngredients] = useState(null); // Personalizando
-  const [extrasItem, setExtras] = useState(null); // Personalizando
-  const [order, setOrder] = useState([]); // Pedido actual
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false); // Estado para controlar el fondo blanco
-  const [showNotification, setShowNotification] = useState(null); // Controla la notificación
+  const { state, dispatch } = useMenu();
+  const {
+    menu,
+    order,
+    selectedItem,
+    customizingItem,
+    ingredientsItem,
+    extrasItem,
+    isSubMenuOpen,
+    showNotification,
+  } = state;
 
   const restaurantId = 2;
 
@@ -23,7 +27,7 @@ const MenuPage = () => {
     const loadMenu = async () => {
       try {
         const data = await fetchMenu(restaurantId);
-        setMenu(data);
+        dispatch({ type: "SET_MENU", payload: data });
       } catch (error) {
         console.error("Error al cargar el menú", error);
       }
@@ -32,56 +36,47 @@ const MenuPage = () => {
   }, [restaurantId]);
 
   const handleAddToOrder = (item, quantity) => {
-    const updatedOrder = [
-      ...order,
-      { item, quantity, ingredientsItem, extrasItem },
-    ];
-
-    setOrder(updatedOrder);
-    setSelectedItem(null); // Cierra el submenú
-    setIsSubMenuOpen(false); // Cierra el fondo blanco
-
-    const extrasPrice = extrasItem.reduce(
-      (act, extra) => act + extra.price * extra.quantity,
+    const extrasPrice = (state.extrasItem || []).reduce(
+      (acc, extra) => acc + extra.price * extra.quantity,
       0
     );
-
     const totalPrice = item.price * quantity + extrasPrice;
 
-    // Muestra la notificación
-    setShowNotification(totalPrice);
+    dispatch({
+      type: "ADD_TO_ORDER",
+      payload: {
+        item,
+        quantity,
+        ingredients: state.ingredientsItem,
+        extras: state.extrasItem,
+      },
+    });
 
-    setTimeout(() => {
-      setShowNotification(null);
-    }, 1000);
+    dispatch({ type: "SHOW_NOTIFICATION", payload: totalPrice });
 
-    setIngredients(null);
-    setExtras(null);
+    setTimeout(() => dispatch({ type: "HIDE_NOTIFICATION" }), 1000);
+
+    dispatch({ type: "CLOSE_SUBMENU" });
   };
 
   const handleSaveCustomization = (ingredients, extras) => {
-    setSelectedItem(customizingItem);
-    setIngredients(ingredients);
-    setExtras(extras);
-    setCustomizingItem(null); // Cierra el panel
+    dispatch({ type: "SAVE_CUSTOMIZATION", payload: { ingredients, extras } });
   };
 
   const handleCancelCustomization = () => {
-    setSelectedItem(customizingItem);
-    setCustomizingItem(null);
+    dispatch({ type: "CANCEL_CUSTOMIZATION" });
+  };
+
+  const handleOpenSubmenu = (item) => {
+    dispatch({ type: "SET_SELECTED_ITEM", payload: item });
   };
 
   const handleCloseSubMenu = () => {
-    setSelectedItem(null); // Cierra el submenu
-    setIsSubMenuOpen(false); // Cierra el fondo blanco
-    setCustomizingItem(null);
-    setIngredients(null);
-    setExtras(null);
+    dispatch({ type: "CLOSE_SUBMENU" });
   };
 
   const handleCustomize = (item) => {
-    setCustomizingItem(item);
-    setSelectedItem(null); // Cierra el submenú principal
+    dispatch({ type: "CUSTOMIZE_ITEM", payload: item });
   };
 
   if (!menu) return <div className="loading">Cargando menú...</div>;
@@ -93,10 +88,7 @@ const MenuPage = () => {
         <Category
           key={category.posCategoryId}
           category={category}
-          onSelectItem={(item) => {
-            setSelectedItem(item);
-            setIsSubMenuOpen(true); // Abre el submenú principal
-          }}
+          onSelectItem={(item) => handleOpenSubmenu(item)}
         />
       ))}
 
