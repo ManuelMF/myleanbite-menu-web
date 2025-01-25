@@ -22,7 +22,11 @@ function menuReducer(state, action) {
     case "SET_SELECTED_ITEM":
       return { ...state, selectedItem: action.payload, isSubMenuOpen: true };
     case "CUSTOMIZE_ITEM":
-      return { ...state, customizingItem: action.payload };
+      return {
+        ...state,
+        customizingItem: action.payload,
+        isSubMenuOpen: false,
+      };
     case "SAVE_CUSTOMIZATION":
       return {
         ...state,
@@ -30,12 +34,14 @@ function menuReducer(state, action) {
         ingredientsItem: action.payload.ingredients,
         extrasItem: action.payload.extras,
         customizingItem: null, //Cierra panel
+        isSubMenuOpen: true,
       };
     case "CANCEL_CUSTOMIZATION":
       return {
         ...state,
         customizingItem: null,
-        selectedItem: customizingItem,
+        selectedItem: state.customizingItem,
+        isSubMenuOpen: true,
       };
     case "CLOSE_SUBMENU":
       return {

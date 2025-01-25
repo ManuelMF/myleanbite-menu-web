@@ -10,16 +10,7 @@ import Loading from "../components/Layout/Loading";
 
 const MenuPage = () => {
   const { state, dispatch } = useMenu();
-  const {
-    menu,
-    order,
-    selectedItem,
-    customizingItem,
-    ingredientsItem,
-    extrasItem,
-    isSubMenuOpen,
-    showNotification,
-  } = state;
+  const { menu, order, showNotification } = state;
 
   const restaurantId = 2;
 
@@ -35,48 +26,8 @@ const MenuPage = () => {
     loadMenu();
   }, [restaurantId]);
 
-  const handleAddToOrder = (item, quantity) => {
-    const extrasPrice = (state.extrasItem || []).reduce(
-      (acc, extra) => acc + extra.price * extra.quantity,
-      0
-    );
-    const totalPrice = item.price * quantity + extrasPrice;
-
-    dispatch({
-      type: "ADD_TO_ORDER",
-      payload: {
-        item,
-        quantity,
-        ingredients: state.ingredientsItem,
-        extras: state.extrasItem,
-      },
-    });
-
-    dispatch({ type: "SHOW_NOTIFICATION", payload: totalPrice });
-
-    setTimeout(() => dispatch({ type: "HIDE_NOTIFICATION" }), 1000);
-
-    dispatch({ type: "CLOSE_SUBMENU" });
-  };
-
-  const handleSaveCustomization = (ingredients, extras) => {
-    dispatch({ type: "SAVE_CUSTOMIZATION", payload: { ingredients, extras } });
-  };
-
-  const handleCancelCustomization = () => {
-    dispatch({ type: "CANCEL_CUSTOMIZATION" });
-  };
-
   const handleOpenSubmenu = (item) => {
     dispatch({ type: "SET_SELECTED_ITEM", payload: item });
-  };
-
-  const handleCloseSubMenu = () => {
-    dispatch({ type: "CLOSE_SUBMENU" });
-  };
-
-  const handleCustomize = (item) => {
-    dispatch({ type: "CUSTOMIZE_ITEM", payload: item });
   };
 
   if (!menu) return <Loading />;
@@ -88,22 +39,11 @@ const MenuPage = () => {
         categories={menu.categories}
         onSelectCategory={handleOpenSubmenu}
       />
-      <SubMenuWrapper
-        isSubMenuOpen={isSubMenuOpen}
-        selectedItem={selectedItem}
-        extrasItem={extrasItem}
-        ingredientsItem={ingredientsItem}
-        onClose={handleCloseSubMenu}
-        onCustomize={() => handleCustomize(selectedItem)}
-        onAddToOrder={handleAddToOrder}
-      />
-      <CustomizeMenu
-        item={customizingItem}
-        ingredients={ingredientsItem}
-        extras={extrasItem}
-        onClose={handleCancelCustomization}
-        onSave={handleSaveCustomization}
-      />
+
+      <SubMenuWrapper />
+
+      <CustomizeMenu />
+
       <OrderSummary order={order} />
 
       <Notification showNotification={showNotification} />

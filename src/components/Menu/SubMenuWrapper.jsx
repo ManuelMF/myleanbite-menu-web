@@ -1,30 +1,20 @@
 import SubMenu from "../Menu/SubMenu";
+import { useMenu } from "../../context/MenuContext";
 
-const SubMenuWrapper = ({
-  isSubMenuOpen,
-  selectedItem,
-  extrasItem,
-  ingredientsItem,
-  onClose,
-  onCustomize,
-  onAddToOrder,
-}) => {
-  if (!selectedItem) return null;
+const SubMenuWrapper = () => {
+  const { state, dispatch } = useMenu();
+  if (!state.selectedItem) return null;
 
   /* Fondo blanco cuando el submenu está abierto */
   return (
     <>
-      {isSubMenuOpen && (
-        <div className="submenu-overlay" onClick={onClose}></div>
+      {(state.isSubMenuOpen || state.customizingItem) && (
+        <div
+          className="submenu-overlay"
+          onClick={() => dispatch({ type: "CLOSE_SUBMENU" })}
+        />
       )}
-      <SubMenu
-        item={selectedItem}
-        extras={extrasItem}
-        ingredients={ingredientsItem}
-        onClose={onClose}
-        onCustomize={onCustomize}
-        onAddToOrder={onAddToOrder}
-      />
+      <SubMenu />
     </>
   );
 };

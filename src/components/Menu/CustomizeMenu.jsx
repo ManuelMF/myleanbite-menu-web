@@ -1,68 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useMenu } from "../../context/MenuContext";
 import "../../styles/customizeMenu.css";
 
-const CustomizeMenu = ({ item, ingredients, extras, onClose, onSave }) => {
-  if (!item) return null;
+const CustomizeMenu = () => {
+  const { state, dispatch } = useMenu();
+  const { customizingItem, ingredientsItem, extrasItem } = state;
 
-  const ingredientsList = ingredients
-    ? ingredients
-    : item.ingredientsDTO?.map((ingredient, i) => ({
-        ...ingredient,
-        quantity: 1,
-        key: i,
-      })) || [];
+  if (!customizingItem) return null;
 
-  const extrasList = extras
-    ? extras
-    : item.extrasDTO?.map((extra, i) => ({
-        ...extra,
-        quantity: 0,
-        key: (ingredientsList.length || 0) + i,
-      })) || [];
+  // Calcular las listas iniciales de ingredientes y extras
+  const ingredientsList =
+    ingredientsItem ||
+    customizingItem.ingredientsDTO?.map((ingredient, i) => ({
+      ...ingredient,
+      quantity: 1,
+      key: i,
+    })) ||
+    [];
 
+  const extrasList =
+    extrasItem ||
+    customizingItem.extrasDTO?.map((extra, i) => ({
+      ...extra,
+      quantity: 0,
+      key: ingredientsList.length + i,
+    })) ||
+    [];
+
+  // Inicializar el estado usando las listas calculadas
   const [ingredientQuantities, setIngredientQuantities] =
     useState(ingredientsList);
   const [extrasQuantities, setExtrasQuantities] = useState(extrasList);
 
-  const handleIngredientChange = (ingredientId, action) => {
-    setIngredientQuantities((prev) =>
-      prev.map((ingredient) =>
-        ingredient.productId === ingredientId
+  // Función para manejar cambios en las cantidades
+  const handleQuantityChange = (items, setItems, itemId, action) => {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.productId === itemId
           ? {
-              ...ingredient,
+              ...item,
               quantity:
                 action === "increase"
-                  ? ingredient.quantity + 1
-                  : ingredient.quantity > 0
-                  ? ingredient.quantity - 1
-                  : 0,
+                  ? item.quantity + 1
+                  : Math.max(item.quantity - 1, 0),
             }
-          : ingredient
+          : item
       )
     );
   };
-  const handleExtraChange = (extraId, action) => {
-    setExtrasQuantities((prev) =>
-      prev.map((extra) =>
-        extra.productId === extraId
-          ? {
-              ...extra,
-              quantity:
-                action === "increase"
-                  ? extra.quantity + 1
-                  : extra.quantity > 0
-                  ? extra.quantity - 1
-                  : 0,
-            }
-          : extra
-      )
-    );
+
+  const handleSaveCustomization = (ingredients, extras) => {
+    dispatch({ type: "SAVE_CUSTOMIZATION", payload: { ingredients, extras } });
+  };
+
+  const handleCancelCustomization = () => {
+    dispatch({ type: "CANCEL_CUSTOMIZATION" });
   };
 
   return (
     <div className="customize-menu">
       <div className="customize-content">
-        <h2 className="customize-title">Personaliza {item.name}</h2>
+        <h2 className="customize-title">Personaliza {customizingItem.name}</h2>
 
         <div className="ingredients-list">
           {ingredientQuantities.map((ingredient) => (
@@ -71,19 +69,29 @@ const CustomizeMenu = ({ item, ingredients, extras, onClose, onSave }) => {
               <div className="ingredient-controls">
                 <button
                   className="control-btn"
-                  disabled={ingredient.quantity == 0}
+                  disabled={ingredient.quantity === 0}
                   onClick={() =>
-                    handleIngredientChange(ingredient.productId, "decrease")
+                    handleQuantityChange(
+                      ingredientQuantities,
+                      setIngredientQuantities,
+                      ingredient.productId,
+                      "decrease"
+                    )
                   }
                 >
                   -
                 </button>
                 <span className="quantity">{ingredient.quantity}</span>
                 <button
-                  disabled={ingredient.quantity == 1}
                   className="control-btn"
+                  disabled={ingredient.quantity === 1}
                   onClick={() =>
-                    handleIngredientChange(ingredient.productId, "increase")
+                    handleQuantityChange(
+                      ingredientQuantities,
+                      setIngredientQuantities,
+                      ingredient.productId,
+                      "increase"
+                    )
                   }
                 >
                   +
@@ -93,19 +101,35 @@ const CustomizeMenu = ({ item, ingredients, extras, onClose, onSave }) => {
           ))}
           {extrasQuantities.map((extra) => (
             <div key={extra.key} className="ingredient-item">
-              <span>{extra.name + " (" + extra.price + " €)"}</span>
+              <span>
+                {extra.name} ({extra.price} €)
+              </span>
               <div className="ingredient-controls">
                 <button
                   className="control-btn"
-                  disabled={extra.quantity == 0}
-                  onClick={() => handleExtraChange(extra.productId, "decrease")}
+                  disabled={extra.quantity === 0}
+                  onClick={() =>
+                    handleQuantityChange(
+                      extrasQuantities,
+                      setExtrasQuantities,
+                      extra.productId,
+                      "decrease"
+                    )
+                  }
                 >
                   -
                 </button>
                 <span className="quantity">{extra.quantity}</span>
                 <button
                   className="control-btn"
-                  onClick={() => handleExtraChange(extra.productId, "increase")}
+                  onClick={() =>
+                    handleQuantityChange(
+                      extrasQuantities,
+                      setExtrasQuantities,
+                      extra.productId,
+                      "increase"
+                    )
+                  }
                 >
                   +
                 </button>
@@ -113,14 +137,16 @@ const CustomizeMenu = ({ item, ingredients, extras, onClose, onSave }) => {
             </div>
           ))}
         </div>
-        <br />
+
         <div className="submenu-footer">
-          <button className="cancel-btn" onClick={onClose}>
+          <button className="cancel-btn" onClick={handleCancelCustomization}>
             Cancelar
           </button>
           <button
             className="add-btn"
-            onClick={() => onSave(ingredientQuantities, extrasQuantities)}
+            onClick={() =>
+              handleSaveCustomization(ingredientQuantities, extrasQuantities)
+            }
           >
             Guardar cambios
           </button>

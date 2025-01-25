@@ -2,17 +2,20 @@ import React from "react";
 import "../../styles/submenu.css";
 
 const OrderSummary = ({ order }) => {
-  const totalPrice = order.reduce((total, { item, extrasItem, quantity }) => {
-    const extrasTotal = extrasItem
-      ? extrasItem.reduce((sum, extra) => sum + extra.price * extra.quantity, 0)
-      : 0;
-    return total + item.price * quantity + extrasTotal;
-  }, 0);
+  const totalPrice = order.reduce(
+    (total, { selectedItem, extras, quantity }) => {
+      const extrasTotal = extras
+        ? extras.reduce((sum, extra) => sum + extra.price * extra.quantity, 0)
+        : 0;
+      return total + selectedItem.price * quantity + extrasTotal;
+    },
+    0
+  );
 
   const expandedOrder = [];
-  order.forEach(({ item, quantity }) => {
+  order.forEach(({ selectedItem, quantity }) => {
     for (let i = 0; i < quantity; i++) {
-      expandedOrder.push(item.name);
+      expandedOrder.push(selectedItem.name);
     }
   });
 
