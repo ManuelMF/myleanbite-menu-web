@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMenu } from "../../context/MenuContext";
-import "../../styles/customizeMenu.css";
+import "../../styles/menu/customizeMenu.css";
 
 const CustomizeMenu = () => {
   const { state, dispatch } = useMenu();

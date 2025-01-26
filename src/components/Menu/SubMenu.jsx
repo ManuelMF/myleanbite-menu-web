@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/submenu.css";
+import "../../styles/menu/submenu.css";
 import { useMenu } from "../../context/MenuContext";
 
 const SubMenu = () => {
