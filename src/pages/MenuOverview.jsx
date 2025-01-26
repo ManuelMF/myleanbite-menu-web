@@ -1,6 +1,19 @@
 import React from "react";
+import CategoryList from "../components/Overview/CategoryList";
+import PrincipalCategories from "../components/Overview/PrincipalCategories";
+import MostOrderedDishes from "../components/Overview/MostOrderedDishes";
+import { useLoadMenu } from "../hooks/useLoadMenu";
+import { useMenu } from "../context/MenuContext";
+import Loading from "../components/Layout/Loading";
 
 const MenuOverview = () => {
+  const { state } = useMenu();
+  const { menu } = state;
+  const restaurantId = 2;
+  useLoadMenu(restaurantId);
+
+  if (!menu) return <Loading />;
+
   const submenus = [
     "Postres",
     "Bebidas",
@@ -42,51 +55,11 @@ const MenuOverview = () => {
       <div style={styles.logoContainer}>
         <img src="/logo.png" alt="Logo del restaurante" style={styles.logo} />
       </div>
+      <CategoryList />
 
-      {/* Submenús */}
-      <div style={styles.submenuContainer}>
-        <h3 style={styles.sectionTitle}>Categorías</h3>
-        <div style={styles.submenuGrid}>
-          {submenus.map((submenu, index) => (
-            <button key={index} style={styles.submenuButton}>
-              {submenu}
-            </button>
-          ))}
-        </div>
-      </div>
+      <PrincipalCategories />
 
-      {/* Sección principales */}
-      <div style={styles.principalesContainer}>
-        <h2 style={styles.sectionTitle}>Principales</h2>
-        <div style={styles.principalesList}>
-          {principales.map((principal, index) => (
-            <div key={index} style={styles.principalItem}>
-              {principal}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Productos más pedidos */}
-      <div style={styles.masPedidosContainer}>
-        <h2 style={styles.sectionTitle}>Más pedidos</h2>
-        <div style={styles.productosGrid}>
-          {productosMasPedidos.map((producto) => (
-            <div key={producto.id} style={styles.productoItem}>
-              <img
-                src={producto.img}
-                alt={producto.nombre}
-                style={styles.productoImagen}
-              />
-              <div style={styles.productoInfo}>
-                <h3 style={styles.productoNombre}>{producto.nombre}</h3>
-                <p style={styles.productoDescripcion}>{producto.descripcion}</p>
-                <p style={styles.precio}>{producto.precio}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <MostOrderedDishes />
     </div>
   );
 };

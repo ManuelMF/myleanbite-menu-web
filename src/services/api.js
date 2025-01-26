@@ -5,3 +5,11 @@ export const fetchMenu = async (restaurantId) => {
   if (!response.ok) throw new Error("Error fetching menu");
   return await response.json();
 };
+
+export const fetchTopCategories = async (restaurantId) => {
+  return null;
+};
+
+export const fetchTopDishes = async (restaurantId) => {
+  return null;
+};

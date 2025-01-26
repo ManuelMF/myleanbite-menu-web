@@ -1,30 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useMenu } from "../context/MenuContext";
-import { fetchMenu } from "../services/api";
 import MenuCategoryList from "../components/Menu/MenuCategoryList";
 import SubMenuWrapper from "../components/Menu/SubMenuWrapper";
 import CustomizeMenu from "../components/Menu/CustomizeMenu";
 import OrderSummary from "../components/Menu/OrderSummary";
 import Notification from "../components/Menu/Notification";
 import Loading from "../components/Layout/Loading";
+import { useLoadMenu } from "../hooks/useLoadMenu";
 
 const MenuPage = () => {
-  const { state, dispatch } = useMenu();
+  const { state } = useMenu();
   const { menu } = state;
 
   const restaurantId = 2;
 
-  useEffect(() => {
-    const loadMenu = async () => {
-      try {
-        const data = await fetchMenu(restaurantId);
-        dispatch({ type: "SET_MENU", payload: data });
-      } catch (error) {
-        console.error("Error al cargar el menú", error);
-      }
-    };
-    loadMenu();
-  }, [restaurantId]);
+  useLoadMenu(restaurantId);
 
   if (!menu) return <Loading />;
 
