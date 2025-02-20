@@ -7,11 +7,13 @@ import OverviewHeader from "../components/Overview/OverviewHeader";
 import MostOrderedDishes from "../components/Overview/MostOrderedDishes";
 import Loading from "../components/Layout/Loading";
 import "../styles/menuOverview/menuOverview.css";
+import { useParams } from "react-router-dom";
 
 const MenuOverview = () => {
   const { state } = useMenu();
   const { menu } = state;
-  const restaurantId = 2;
+  const { restaurantId } = useParams();
+
   useLoadMenu(restaurantId);
 
   if (!menu) return <Loading />;

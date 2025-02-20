@@ -6,7 +6,7 @@ import CustomizeMenu from "../components/Menu/CustomizeMenu";
 import OrderSummary from "../components/Menu/OrderSummary";
 import Notification from "../components/Menu/Notification";
 import Loading from "../components/Layout/Loading";
-import { useLoadMenu } from "../hooks/useLoadMenu";
+import { useLoadMenuByCategory } from "../hooks/useLoadMenuByCategory";
 
 const MenuPage = () => {
   const { state } = useMenu();
@@ -14,7 +14,7 @@ const MenuPage = () => {
 
   const restaurantId = 2;
 
-  useLoadMenu(restaurantId);
+  useLoadMenuByCategory(restaurantId);
 
   if (!menu) return <Loading />;
 

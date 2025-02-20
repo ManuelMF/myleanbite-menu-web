@@ -9,6 +9,17 @@ export const fetchMenu = async (restaurantId) => {
   return await response.json();
 };
 
+export const fetchMenuByCategory = async (restaurantId, categoryId) => {
+  const response = await fetch(
+    `http://localhost:8080/api/menu?restaurantId=${restaurantId}&categoryId=${categoryId}`,
+    {
+      credentials: "include",
+    }
+  );
+  if (!response.ok) throw new Error("Error fetching menu by category");
+  return await response.json();
+};
+
 export const fetchTopCategories = async (restaurantId) => {
   return null;
 };
