@@ -8,7 +8,7 @@ const CategoryList = () => {
   const navigate = useNavigate();
 
   const handleCategoryClick = (categoryId) => {
-    navigate(`/${state.menu.restaurantId}/menu?category=${categoryId}`);
+    navigate(`/${state.menu.restaurantId}/menu?categoryId=${categoryId}`);
   };
   console.log(state.menu.categories);
   return (

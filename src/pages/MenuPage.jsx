@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useMenu } from "../context/MenuContext";
 import MenuCategoryList from "../components/Menu/MenuCategoryList";
 import SubMenuWrapper from "../components/Menu/SubMenuWrapper";
@@ -11,10 +12,10 @@ import { useLoadMenuByCategory } from "../hooks/useLoadMenuByCategory";
 const MenuPage = () => {
   const { state } = useMenu();
   const { menu } = state;
-
-  const restaurantId = 2;
-
-  useLoadMenuByCategory(restaurantId);
+  const { restaurantId } = useParams();
+  const [searchParams] = useSearchParams();
+  const categoryId = searchParams.get("categoryId");
+  useLoadMenuByCategory(restaurantId, categoryId);
 
   if (!menu) return <Loading />;
 
