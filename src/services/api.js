@@ -1,6 +1,6 @@
 export const fetchMenu = async (restaurantId) => {
   const response = await fetch(
-    `http://localhost:8080/api/menu?restaurantId=${restaurantId}`,
+    `http://192.168.1.192:8080/api/menu?restaurantId=${restaurantId}`,
     {
       credentials: "include",
     }
@@ -11,7 +11,7 @@ export const fetchMenu = async (restaurantId) => {
 
 export const fetchMenuByCategory = async (restaurantId, categoryId) => {
   const response = await fetch(
-    `http://localhost:8080/api/menu?restaurantId=${restaurantId}&categoryId=${categoryId}`,
+    `http://192.168.1.192:8080/api/menu?restaurantId=${restaurantId}&categoryId=${categoryId}`,
     {
       credentials: "include",
     }
@@ -26,7 +26,7 @@ export const fetchTopCategoriesAndProducts = async (
   numberCategories
 ) => {
   const response = await fetch(
-    `http://localhost:8080/api/menu/top-categories-products?restaurantId=${restaurantId}&numberOfProducts=${numberProducts}&numberOfCategories=${numberCategories}`,
+    `http://192.168.1.192:8080/api/menu/top-categories-products?restaurantId=${restaurantId}&numberOfProducts=${numberProducts}&numberOfCategories=${numberCategories}`,
     {
       credentials: "include",
     }
@@ -39,7 +39,7 @@ export const fetchTopCategoriesAndProducts = async (
 export const fetchValidateToken = async (restaurantId) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/validate?restaurantId=${restaurantId}`,
+      `http://192.168.1.192:8080/api/validate?restaurantId=${restaurantId}`,
       {
         credentials: "include",
       }

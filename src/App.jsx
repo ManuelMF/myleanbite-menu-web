@@ -14,6 +14,11 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route
             path="/:restaurantId/menu/overview"
+            element={<MenuOverview />}
+          />
+          <Route path="/:restaurantId/menu" element={<MenuPage />} />
+          {/* <Route
+            path="/:restaurantId/menu/overview"
             element={
               <ProtectedRoute>
                 <MenuOverview />
@@ -28,7 +33,7 @@ const App = () => {
                 <MenuPage />
               </ProtectedRoute>
             }
-          />
+          /> */}
 
           <Route path="*" element={<NotFound />} />
           <Route path="/unauthorized" element={<NotFound />} />
