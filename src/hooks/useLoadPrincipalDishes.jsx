@@ -16,7 +16,7 @@ export const useLoadPrincipalDishes = () => {
       setError(null);
 
       try {
-        setDishes(state.menu.categories[1].items.slice(0, 3));
+        setDishes(state.menu.categories[1].products.slice(0, 3));
         //const data = await fetchTopDishes(restaurantId);
         // setDishes(data);
       } catch (error) {

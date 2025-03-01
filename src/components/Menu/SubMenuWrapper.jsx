@@ -3,12 +3,12 @@ import { useMenu } from "../../context/MenuContext";
 
 const SubMenuWrapper = () => {
   const { state, dispatch } = useMenu();
-  if (!state.selectedItem) return null;
+  if (!state.selectedProduct) return null;
 
   /* Fondo blanco cuando el submenu está abierto */
   return (
     <>
-      {(state.isSubMenuOpen || state.customizingItem) && (
+      {(state.isSubMenuOpen || state.customizingProduct) && (
         <div
           className="submenu-overlay"
           onClick={() => dispatch({ type: "CLOSE_SUBMENU" })}

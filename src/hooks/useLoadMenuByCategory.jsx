@@ -8,7 +8,7 @@ export const useLoadMenuByCategory = (restaurantId, categoryId) => {
     const loadMenu = async () => {
       try {
         const data = await fetchMenuByCategory(restaurantId, categoryId);
-        dispatch({ type: "SET_MENU", payload: data });
+        dispatch({ type: "SET_SELECTED_CATEGORY", payload: data });
       } catch (error) {
         console.error("Error loading the menu by category", error);
       }

@@ -7,19 +7,19 @@ const OrderSummary = () => {
   const { order } = state;
 
   const totalPrice = order.reduce(
-    (total, { selectedItem, extras, quantity }) => {
+    (total, { selectedProduct, extras, quantity }) => {
       const extrasTotal = extras
         ? extras.reduce((sum, extra) => sum + extra.price * extra.quantity, 0)
         : 0;
-      return total + selectedItem.price * quantity + extrasTotal;
+      return total + selectedProduct.price * quantity + extrasTotal;
     },
     0
   );
 
   const expandedOrder = [];
-  order.forEach(({ selectedItem, quantity }) => {
+  order.forEach(({ selectedProduct, quantity }) => {
     for (let i = 0; i < quantity; i++) {
-      expandedOrder.push(selectedItem.name);
+      expandedOrder.push(selectedProduct.name);
     }
   });
 

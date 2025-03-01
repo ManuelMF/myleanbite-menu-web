@@ -11,13 +11,15 @@ import { useLoadMenuByCategory } from "../hooks/useLoadMenuByCategory";
 
 const MenuPage = () => {
   const { state } = useMenu();
-  const { menu } = state;
-  const { restaurantId } = useParams();
+  const { selectedCategory, menu } = state;
   const [searchParams] = useSearchParams();
+
+  const { restaurantId } = useParams();
   const categoryId = searchParams.get("categoryId");
+
   useLoadMenuByCategory(restaurantId, categoryId);
 
-  if (!menu) return <Loading />;
+  if (!selectedCategory && !menu) return <Loading />;
 
   return (
     <div className="menu-page">

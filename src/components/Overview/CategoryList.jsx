@@ -10,7 +10,7 @@ const CategoryList = () => {
   const handleCategoryClick = (categoryId) => {
     navigate(`/${state.menu.restaurantId}/menu?categoryId=${categoryId}`);
   };
-  console.log(state.menu.categories);
+
   return (
     <div className="submenu-container">
       <h3 className="section-title">Categorías</h3>

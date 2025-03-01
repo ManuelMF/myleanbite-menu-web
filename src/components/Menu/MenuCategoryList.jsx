@@ -4,10 +4,11 @@ import { useMenu } from "../../context/MenuContext";
 
 const MenuCategoryList = () => {
   const { state } = useMenu();
-
+  const { selectedCategory, menu } = state;
+  let menuActive = selectedCategory || menu;
   return (
     <>
-      {state.menu.categories.map((category) => (
+      {menuActive.categories.map((category) => (
         <Category key={category.posCategoryId} category={category} />
       ))}
     </>

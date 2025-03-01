@@ -12,7 +12,7 @@ const MostOrderedDishes = () => {
       <h2 className="section-title">Más pedidos</h2>
       <div className="products-grid">
         {dishes.map((dish) => (
-          <div key={dish.itemId} className="product-item">
+          <div key={dish.id} className="product-product">
             <div className="product-info">
               <h3 className="product-name">{dish.name}</h3>
             </div>

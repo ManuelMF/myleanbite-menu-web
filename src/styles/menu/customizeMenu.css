@@ -56,7 +56,7 @@
   padding-right: 10px; /* Espacio adicional para evitar recorte en scroll */
 }
 
-.ingredient-item {
+.ingredient-product {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -64,7 +64,7 @@
   margin: 10px 0;
 }
 
-.ingredient-item span {
+.ingredient-product span {
   font-size: 1.2rem;
   margin-right: 10px;
   width: 60%;

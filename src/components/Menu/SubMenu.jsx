@@ -4,7 +4,7 @@ import { useMenu } from "../../context/MenuContext";
 
 const SubMenu = () => {
   const { state, dispatch } = useMenu();
-  const { selectedItem, extrasItem, ingredientsItem } = state;
+  const { selectedProduct, extrasProduct, ingredientsProduct } = state;
   const [quantity, setQuantity] = useState(1);
 
   if (!state.isSubMenuOpen) return null;
@@ -18,19 +18,19 @@ const SubMenu = () => {
   };
 
   const handleAddToOrder = () => {
-    const extrasPrice = (extrasItem || []).reduce(
+    const extrasPrice = (extrasProduct || []).reduce(
       (acc, extra) => acc + extra.price * extra.quantity,
       0
     );
-    const totalPrice = selectedItem.price * quantity + extrasPrice;
+    const totalPrice = selectedProduct.price * quantity + extrasPrice;
 
     dispatch({
       type: "ADD_TO_ORDER",
       payload: {
-        selectedItem,
+        selectedProduct,
         quantity,
-        ingredients: ingredientsItem,
-        extras: extrasItem,
+        ingredients: ingredientsProduct,
+        extras: extrasProduct,
       },
     });
 
@@ -42,13 +42,13 @@ const SubMenu = () => {
   };
 
   const extrasPrice =
-    extrasItem &&
-    extrasItem.reduce((act, extra) => act + extra.price * extra.quantity, 0);
+    extrasProduct &&
+    extrasProduct.reduce((act, extra) => act + extra.price * extra.quantity, 0);
 
-  const isPersonifiedItem = () => {
+  const isPersonifiedProduct = () => {
     return (
-      ingredientsItem?.some((ingredient) => ingredient.quantity === 0) ||
-      extrasItem?.some((extra) => extra.quantity > 0) ||
+      ingredientsProduct?.some((ingredient) => ingredient.quantity === 0) ||
+      extrasProduct?.some((extra) => extra.quantity > 0) ||
       false
     );
   };
@@ -56,15 +56,15 @@ const SubMenu = () => {
   return (
     <div className="submenu">
       <div className="submenu-content">
-        <h2 className="submenu-title">{selectedItem.name}</h2>
+        <h2 className="submenu-title">{selectedProduct.name}</h2>
         <p className="submenu-price">
-          {(selectedItem.price + extrasPrice).toFixed(2)} €
+          {(selectedProduct.price + extrasPrice).toFixed(2)} €
         </p>
 
         <button
           className="customize-btn"
           onClick={() => {
-            dispatch({ type: "CUSTOMIZE_ITEM", payload: selectedItem });
+            dispatch({ type: "CUSTOMIZE_PRODUCT", payload: selectedProduct });
           }}
         >
           Personalizar
@@ -82,7 +82,7 @@ const SubMenu = () => {
           <button
             className="control-btn"
             onClick={handleIncrease}
-            disabled={isPersonifiedItem()}
+            disabled={isPersonifiedProduct()}
           >
             +
           </button>
