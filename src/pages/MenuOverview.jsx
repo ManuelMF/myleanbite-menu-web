@@ -8,6 +8,10 @@ import MostOrderedDishes from "../components/Overview/MostOrderedDishes";
 import Loading from "../components/Layout/Loading";
 import "../styles/menuOverview/menuOverview.css";
 import { useParams } from "react-router-dom";
+import SubMenuWrapper from "../components/Menu/SubMenuWrapper";
+import CustomizeMenu from "../components/Menu/CustomizeMenu";
+import OrderSummary from "../components/Menu/OrderSummary";
+import Notification from "../components/Menu/Notification";
 
 const MenuOverview = () => {
   const { state } = useMenu();
@@ -27,6 +31,10 @@ const MenuOverview = () => {
       <PrincipalCategories />
 
       <MostOrderedDishes />
+      <SubMenuWrapper />
+      <CustomizeMenu />
+      <OrderSummary />
+      <Notification />
     </div>
   );
 };

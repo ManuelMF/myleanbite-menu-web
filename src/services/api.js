@@ -20,12 +20,20 @@ export const fetchMenuByCategory = async (restaurantId, categoryId) => {
   return await response.json();
 };
 
-export const fetchTopCategories = async (restaurantId) => {
-  return null;
-};
-
-export const fetchTopDishes = async (restaurantId) => {
-  return null;
+export const fetchTopCategoriesAndProducts = async (
+  restaurantId,
+  numberProducts,
+  numberCategories
+) => {
+  const response = await fetch(
+    `http://localhost:8080/api/menu/top-categories-products?restaurantId=${restaurantId}&numberOfProducts=${numberProducts}&numberOfCategories=${numberCategories}`,
+    {
+      credentials: "include",
+    }
+  );
+  if (!response.ok)
+    throw new Error("Error fetching Top Categories And Products");
+  return await response.json();
 };
 
 export const fetchValidateToken = async (restaurantId) => {
