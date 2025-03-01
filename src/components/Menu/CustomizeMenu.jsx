@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useMenu } from "../../context/MenuContext";
 import "../../styles/menu/customizeMenu.css";
 
@@ -33,19 +33,19 @@ const CustomizeMenu = () => {
   const [extrasQuantities, setExtrasQuantities] = useState(extrasList);
 
   // Función para manejar cambios en las cantidades
-  const handleQuantityChange = (products, setProducts, productId, action) => {
+  const handleQuantityChange = (setProducts, itemId, action) => {
     setProducts((prev) =>
-      prev.map((product) =>
-        product.id === productId
+      prev.map((item) => {
+        return item.id === itemId
           ? {
-              ...product,
+              ...item,
               quantity:
                 action === "increase"
-                  ? product.quantity + 1
-                  : Math.max(product.quantity - 1, 0),
+                  ? item.quantity + 1
+                  : Math.max(item.quantity - 1, 0),
             }
-          : product
-      )
+          : item;
+      })
     );
   };
 
@@ -74,9 +74,8 @@ const CustomizeMenu = () => {
                   disabled={ingredient.quantity === 0}
                   onClick={() =>
                     handleQuantityChange(
-                      ingredientQuantities,
                       setIngredientQuantities,
-                      ingredient.productId,
+                      ingredient.id,
                       "decrease"
                     )
                   }
@@ -89,9 +88,8 @@ const CustomizeMenu = () => {
                   disabled={ingredient.quantity === 1}
                   onClick={() =>
                     handleQuantityChange(
-                      ingredientQuantities,
                       setIngredientQuantities,
-                      ingredient.productId,
+                      ingredient.id,
                       "increase"
                     )
                   }
@@ -112,9 +110,8 @@ const CustomizeMenu = () => {
                   disabled={extra.quantity === 0}
                   onClick={() =>
                     handleQuantityChange(
-                      extrasQuantities,
                       setExtrasQuantities,
-                      extra.productId,
+                      extra.id,
                       "decrease"
                     )
                   }
@@ -126,9 +123,8 @@ const CustomizeMenu = () => {
                   className="control-btn"
                   onClick={() =>
                     handleQuantityChange(
-                      extrasQuantities,
                       setExtrasQuantities,
-                      extra.productId,
+                      extra.id,
                       "increase"
                     )
                   }

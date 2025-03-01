@@ -23,7 +23,7 @@ const MenuPage = () => {
 
   return (
     <div className="menu-page">
-      <h1 className="menu-title">{`Menú del Restaurante ${menu.restaurantId}`}</h1>
+      <h1 className="menu-title">{`Menú del Restaurante ${restaurantId}`}</h1>
       <MenuCategoryList />
 
       <SubMenuWrapper />
