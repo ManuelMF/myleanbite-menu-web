@@ -11,14 +11,20 @@ const CategoryList = () => {
     navigate(`/${state.menu.restaurantId}/menu?categoryId=${categoryId}`);
   };
 
+  const categories = state.menu.categories;
+  const isOdd = categories.length % 2 !== 0;
+  const lastIndex = categories.length - 1;
+
   return (
     <div className="submenu-container">
       <h3 className="section-title">Categorías</h3>
       <div className="submenu-grid">
-        {state.menu.categories.map((category, index) => (
+        {categories.map((category, index) => (
           <button
             key={index}
-            className="submenu-button"
+            className={`submenu-button ${
+              isOdd && index === lastIndex ? "expanded" : ""
+            }`}
             onClick={() => handleCategoryClick(category.id)}
           >
             {category.name}

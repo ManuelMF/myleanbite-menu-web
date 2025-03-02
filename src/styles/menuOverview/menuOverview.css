@@ -32,7 +32,7 @@
 
 .submenu-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
@@ -52,6 +52,11 @@
   background-color: #f0f0f0;
   border-color: #ccc;
 }
+
+.submenu-button.expanded {
+  grid-column: span 2;
+}
+
 
 .main-categories-container {
   margin-bottom: 32px;
