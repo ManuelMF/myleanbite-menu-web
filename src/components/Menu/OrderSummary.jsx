@@ -3,7 +3,8 @@ import "../../styles/menu/submenu.css";
 import { useMenu } from "../../context/MenuContext";
 
 const OrderSummary = () => {
-  const { state } = useMenu();
+  const { state, dispatch } = useMenu();
+
   const { order } = state;
 
   const totalPrice = order.reduce(
@@ -17,18 +18,26 @@ const OrderSummary = () => {
   );
 
   const expandedOrder = [];
-  order.forEach(({ selectedProduct, quantity }) => {
-    for (let i = 0; i < quantity; i++) {
-      expandedOrder.push(selectedProduct.name);
+  order.forEach(
+    ({ selectedProduct, ingredients = [], extras = [], quantity }) => {
+      for (let i = 0; i < quantity; i++) {
+        expandedOrder.push({ ...selectedProduct, ingredients, extras });
+      }
     }
-  });
+  );
+
+  const handleOpenSubmenu = (product) => {
+    dispatch({ type: "SET_SELECTED_PRODUCT_TO_EDIT", payload: product });
+  };
 
   return (
     <div className="order-summary">
       <h2 className="section-title">Tu Pedido</h2>
       <ul>
-        {expandedOrder.map((name, index) => (
-          <li key={index}>{name}</li>
+        {expandedOrder.map((product, index) => (
+          <li key={index} onClick={() => handleOpenSubmenu(product)}>
+            {product.name}
+          </li>
         ))}
       </ul>
       <p>Total: {totalPrice.toFixed(2)} €</p>

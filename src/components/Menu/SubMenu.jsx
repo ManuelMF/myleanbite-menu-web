@@ -4,7 +4,14 @@ import { useMenu } from "../../context/MenuContext";
 
 const SubMenu = () => {
   const { state, dispatch } = useMenu();
-  const { selectedProduct, extrasProduct, ingredientsProduct } = state;
+  const {
+    selectedProduct,
+    extrasProduct,
+    ingredientsProduct,
+    isEditingProduct,
+  } = state;
+  const { extras, ingredients } = selectedProduct; // this extras & ingredients comes from the Order sumary
+
   const [quantity, setQuantity] = useState(1);
 
   if (!state.isSubMenuOpen) return null;
@@ -24,15 +31,27 @@ const SubMenu = () => {
     );
     const totalPrice = selectedProduct.price * quantity + extrasPrice;
 
-    dispatch({
-      type: "ADD_TO_ORDER",
-      payload: {
-        selectedProduct,
-        quantity,
-        ingredients: ingredientsProduct,
-        extras: extrasProduct,
-      },
-    });
+    if (isEditingProduct) {
+      dispatch({
+        type: "UPDATE_PRODUCT_ORDER",
+        payload: {
+          selectedProduct,
+          ingredients: ingredientsProduct,
+          extras: extrasProduct,
+          price: totalPrice,
+        },
+      });
+    } else {
+      dispatch({
+        type: "ADD_TO_ORDER",
+        payload: {
+          selectedProduct,
+          quantity,
+          ingredients: ingredientsProduct,
+          extras: extrasProduct,
+        },
+      });
+    }
 
     dispatch({ type: "SHOW_NOTIFICATION", payload: totalPrice });
 
@@ -49,6 +68,8 @@ const SubMenu = () => {
     return (
       ingredientsProduct?.some((ingredient) => ingredient.quantity === 0) ||
       extrasProduct?.some((extra) => extra.quantity > 0) ||
+      extras?.some((extra) => extra.quantity > 0) || // this extras comes from the Order sumary
+      ingredients?.some((extra) => extra.quantity > 0) || // this ingredients comes from the Order sumary
       false
     );
   };
@@ -97,7 +118,7 @@ const SubMenu = () => {
           Cancelar
         </button>
         <button className="add-btn" onClick={handleAddToOrder}>
-          Añadir a la orden
+          {isEditingProduct ? "Guardar cambios" : "Añadir a la orden"}
         </button>
       </div>
     </div>

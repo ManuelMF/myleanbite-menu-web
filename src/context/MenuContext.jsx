@@ -11,6 +11,7 @@ const initialState = {
   extrasProduct: null,
   isSubMenuOpen: false,
   showNotification: null,
+  isEditingProduct: false,
 };
 
 // Reducer para manejar acciones
@@ -18,12 +19,33 @@ function menuReducer(state, action) {
   switch (action.type) {
     case "SET_MENU":
       return { ...state, menu: action.payload };
+    case "UPDATE_PRODUCT_ORDER": {
+      let orderProduct = state.order.find(
+        (product) =>
+          product.selectedProduct.id == action.payload.selectedProduct.id
+      );
+      orderProduct.ingredients = action.payload.ingredients;
+      orderProduct.extras = action.payload.extras;
+      orderProduct.price = action.payload.price;
+
+      state.isEditingProduct = false;
+      return state;
+    }
     case "ADD_TO_ORDER":
       return { ...state, order: [...state.order, action.payload] };
     case "SET_SELECTED_CATEGORY":
       return { ...state, selectedCategory: action.payload };
     case "SET_SELECTED_PRODUCT":
       return { ...state, selectedProduct: action.payload, isSubMenuOpen: true };
+    case "SET_SELECTED_PRODUCT_TO_EDIT":
+      return {
+        ...state,
+        selectedProduct: action.payload,
+        ingredientsProduct: action.payload.ingredients,
+        extrasProduct: action.payload.extras,
+        isSubMenuOpen: true,
+        isEditingProduct: true,
+      };
     case "CUSTOMIZE_PRODUCT":
       return {
         ...state,
