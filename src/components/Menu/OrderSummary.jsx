@@ -25,7 +25,7 @@ const OrderSummary = () => {
 
   return (
     <div className="order-summary">
-      <h2>Tu Pedido</h2>
+      <h2 className="section-title">Tu Pedido</h2>
       <ul>
         {expandedOrder.map((name, index) => (
           <li key={index}>{name}</li>

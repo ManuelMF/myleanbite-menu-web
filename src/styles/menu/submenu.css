@@ -107,42 +107,65 @@
 
 
 
+/* Contenedor del resumen de pedido */
+.order-summary {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+}
 
-/* Footer del submenu */
-.submenu-footer { 
+/* Título de la sección */
+.section-title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Lista de productos */
+.order-summary ul {
+  list-style: none;
   padding: 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  box-sizing: border-box;
-  justify-content: center;
+  margin: 0 0 15px;
 }
-.cancel-btn,
-.add-btn {
-  width: 50%;
-  padding: 10px 0;
+
+.order-summary li {
   font-size: 1rem;
-  cursor: pointer;
-  margin: 0;
-  box-sizing: border-box;
-  border-radius: 0;
-}
-.cancel-btn{
-  border-bottom-left-radius: 10px;
-}
-.add-btn {
-  border-bottom-right-radius: 10px; 
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  color: #555;
 }
 
-.cancel-btn {
-  background: white;
-  border: 1px solid #ccc;
-  color: black;
+.order-summary li:last-child {
+  border-bottom: none;
 }
 
-.add-btn {
-  background: #ffc107;
+/* Total del pedido */
+.order-summary p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #222;
+}
+
+/* Botón de finalizar pedido */
+.finish-btn {
+background: #ffc107;
   border: 1px solid #ffc107;
   color: black;
+  font-size: 1rem;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+}
+
+.finish-btn:hover {
+  background: #e64a19;
 }

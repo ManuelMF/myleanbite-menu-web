@@ -33,8 +33,9 @@ const MenuOverview = () => {
       <MostOrderedDishes />
       <SubMenuWrapper />
       <CustomizeMenu />
-      <OrderSummary />
       <Notification />
+
+      <OrderSummary />
     </div>
   );
 };

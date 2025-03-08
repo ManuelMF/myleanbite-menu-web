@@ -27,12 +27,10 @@ const CustomizeMenu = () => {
     })) ||
     [];
 
-  // Inicializar el estado usando las listas calculadas
   const [ingredientQuantities, setIngredientQuantities] =
     useState(ingredientsList);
   const [extrasQuantities, setExtrasQuantities] = useState(extrasList);
 
-  // Función para manejar cambios en las cantidades
   const handleQuantityChange = (setProducts, itemId, action) => {
     setProducts((prev) =>
       prev.map((item) => {

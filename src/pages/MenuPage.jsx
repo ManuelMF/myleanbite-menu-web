@@ -24,24 +24,26 @@ const MenuPage = () => {
   if (!selectedCategory && !menu) return <Loading />;
 
   return (
-    <div className="menu-page">
-      <button
-        className="back-button"
-        onClick={() => navigate(`/${restaurantId}/menu/overview`)}
-      >
-        <FaArrowLeft />
-      </button>
+    <div className="container">
+      <div className="menu-page">
+        <button
+          className="back-button"
+          onClick={() => navigate(`/${restaurantId}/menu/overview`)}
+        >
+          <FaArrowLeft />
+        </button>
 
-      <h1 className="menu-title">{`Menú del Restaurante ${restaurantId}`}</h1>
-      <MenuCategoryList />
+        <h1 className="menu-title">{`Menú del Restaurante ${restaurantId}`}</h1>
+        <MenuCategoryList />
 
-      <SubMenuWrapper />
+        <SubMenuWrapper />
 
-      <CustomizeMenu />
+        <CustomizeMenu />
 
-      <OrderSummary />
+        <OrderSummary />
 
-      <Notification />
+        <Notification />
+      </div>
     </div>
   );
 };
