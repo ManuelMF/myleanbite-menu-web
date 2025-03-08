@@ -1,10 +1,10 @@
 import React from "react";
 import "../../styles/menu/submenu.css";
 import { useMenu } from "../../context/MenuContext";
+import { FaTrash, FaEdit } from "react-icons/fa"; // Importamos los íconos
 
 const OrderSummary = () => {
   const { state, dispatch } = useMenu();
-
   const { order } = state;
 
   const totalPrice = order.reduce(
@@ -30,13 +30,36 @@ const OrderSummary = () => {
     dispatch({ type: "SET_SELECTED_PRODUCT_TO_EDIT", payload: product });
   };
 
+  const handleRemoveProduct = (product) => {
+    dispatch({ type: "REMOVE_FROM_ORDER", payload: product });
+  };
+
   return (
     <div className="order-summary">
       <h2 className="section-title">Tu Pedido</h2>
       <ul>
         {expandedOrder.map((product, index) => (
-          <li key={index} onClick={() => handleOpenSubmenu(product)}>
-            {product.name}
+          <li key={index} className="order-item">
+            <span
+              className="editable-text"
+              onClick={() => handleOpenSubmenu(product)}
+            >
+              {product.name}
+            </span>
+            <div className="order-actions">
+              <button
+                className="icon-btn"
+                onClick={() => handleOpenSubmenu(product)}
+              >
+                <FaEdit />
+              </button>
+              <button
+                className="icon-btn"
+                onClick={() => handleRemoveProduct(product)}
+              >
+                <FaTrash />
+              </button>
+            </div>
           </li>
         ))}
       </ul>

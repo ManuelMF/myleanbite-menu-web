@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/menu/submenu.css";
 import { useMenu } from "../../context/MenuContext";
+import { generateUniqueId } from "../../utils";
 
 const SubMenu = () => {
   const { state, dispatch } = useMenu();
@@ -45,7 +46,7 @@ const SubMenu = () => {
       dispatch({
         type: "ADD_TO_ORDER",
         payload: {
-          selectedProduct,
+          selectedProduct: { ...selectedProduct, orderId: generateUniqueId() },
           quantity,
           ingredients: ingredientsProduct,
           extras: extrasProduct,

@@ -20,19 +20,32 @@ function menuReducer(state, action) {
     case "SET_MENU":
       return { ...state, menu: action.payload };
     case "UPDATE_PRODUCT_ORDER": {
-      let orderProduct = state.order.find(
-        (product) =>
-          product.selectedProduct.id == action.payload.selectedProduct.id
-      );
-      orderProduct.ingredients = action.payload.ingredients;
-      orderProduct.extras = action.payload.extras;
-      orderProduct.price = action.payload.price;
-
-      state.isEditingProduct = false;
-      return state;
+      return {
+        ...state,
+        order: state.order.map((product) => {
+          return product.selectedProduct.orderId ==
+            action.payload.selectedProduct.orderId
+            ? {
+                ...product,
+                ingredients: action.payload.ingredients,
+                extras: action.payload.extras,
+                price: action.payload.price,
+              }
+            : product;
+        }),
+        isEditingProduct: false,
+      };
     }
+
     case "ADD_TO_ORDER":
       return { ...state, order: [...state.order, action.payload] };
+    case "REMOVE_FROM_ORDER": {
+      let order = state.order.filter(
+        (product) => product.selectedProduct.orderId != action.payload.orderId
+      );
+
+      return { ...state, order };
+    }
     case "SET_SELECTED_CATEGORY":
       return { ...state, selectedCategory: action.payload };
     case "SET_SELECTED_PRODUCT":
