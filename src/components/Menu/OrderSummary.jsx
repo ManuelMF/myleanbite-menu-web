@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/menu/submenu.css";
 import { useMenu } from "../../context/MenuContext";
-import { FaTrash, FaEdit } from "react-icons/fa"; // Importamos los íconos
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 const OrderSummary = () => {
   const { state, dispatch } = useMenu();

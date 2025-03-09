@@ -99,10 +99,8 @@ function menuReducer(state, action) {
   }
 }
 
-// Crear el contexto
 const MenuContext = createContext();
 
-// Proveedor del contexto
 export const MenuProvider = ({ children }) => {
   const [state, dispatch] = useReducer(menuReducer, initialState);
 
@@ -113,5 +111,4 @@ export const MenuProvider = ({ children }) => {
   );
 };
 
-// Hook para usar el contexto
 export const useMenu = () => useContext(MenuContext);
