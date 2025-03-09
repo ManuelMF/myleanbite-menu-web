@@ -1,6 +1,7 @@
-export const fetchMenu = async (restaurantId) => {
+export const fetchMenu = async (restaurantId, tableNumberId) => {
+  console.log("🚀 ~ fetchMenu ~ tableNumberId:", tableNumberId);
   const response = await fetch(
-    `http://localhost:8080/api/menu?restaurantId=${restaurantId}`,
+    `http://localhost:8080/api/menu?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
     {
       credentials: "include",
     }
@@ -9,9 +10,13 @@ export const fetchMenu = async (restaurantId) => {
   return await response.json();
 };
 
-export const fetchMenuByCategory = async (restaurantId, categoryId) => {
+export const fetchMenuByCategory = async (
+  restaurantId,
+  categoryId,
+  tableNumberId
+) => {
   const response = await fetch(
-    `http://localhost:8080/api/menu?restaurantId=${restaurantId}&categoryId=${categoryId}`,
+    `http://localhost:8080/api/menu?restaurantId=${restaurantId}&categoryId=${categoryId}&tableNumberId=${tableNumberId}`,
     {
       credentials: "include",
     }
@@ -23,10 +28,11 @@ export const fetchMenuByCategory = async (restaurantId, categoryId) => {
 export const fetchTopCategoriesAndProducts = async (
   restaurantId,
   numberProducts,
-  numberCategories
+  numberCategories,
+  tableNumberId
 ) => {
   const response = await fetch(
-    `http://localhost:8080/api/menu/top-categories-products?restaurantId=${restaurantId}&numberOfProducts=${numberProducts}&numberOfCategories=${numberCategories}`,
+    `http://localhost:8080/api/menu/top-categories-products?restaurantId=${restaurantId}&numberOfProducts=${numberProducts}&numberOfCategories=${numberCategories}&tableNumberId=${tableNumberId}`,
     {
       credentials: "include",
     }
@@ -36,10 +42,10 @@ export const fetchTopCategoriesAndProducts = async (
   return await response.json();
 };
 
-export const fetchValidateToken = async (restaurantId) => {
+export const fetchValidateToken = async (restaurantId, tableNumberId) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/validate?restaurantId=${restaurantId}`,
+      `http://localhost:8080/api/validate?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
       {
         credentials: "include",
       }

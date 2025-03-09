@@ -13,7 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
-            path="/:restaurantId/menu/overview"
+            path="/:restaurantId/:tableNumberId/menu/overview"
             element={
               <ProtectedRoute>
                 <MenuOverview />
@@ -22,7 +22,7 @@ const App = () => {
           />
 
           <Route
-            path="/:restaurantId/menu"
+            path="/:restaurantId/:tableNumberId/menu"
             element={
               <ProtectedRoute>
                 <MenuPage />

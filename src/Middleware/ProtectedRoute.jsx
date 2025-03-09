@@ -5,7 +5,7 @@ import { fetchValidateToken } from "../services/api";
 const ProtectedRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const navigate = useNavigate();
-  const { restaurantId } = useParams();
+  const { restaurantId, tableNumberId } = useParams();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }) => {
         navigate("/unauthorized");
         return;
       }
-      const valid = await fetchValidateToken(restaurantId);
+      const valid = await fetchValidateToken(restaurantId, tableNumberId);
       setIsAuthenticated(valid);
       if (!valid) navigate("/unauthorized");
     };

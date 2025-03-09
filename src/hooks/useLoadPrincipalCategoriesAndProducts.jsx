@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useMenu } from "../context/MenuContext";
 import { fetchTopCategoriesAndProducts } from "../services/api";
+import { useParams } from "react-router-dom";
 
 export const useLoadPrincipalCategoriesAndProducts = () => {
   const { state } = useMenu();
@@ -10,7 +11,7 @@ export const useLoadPrincipalCategoriesAndProducts = () => {
   const [error, setError] = useState(null);
 
   const restaurantId = state.menu.restaurantId;
-
+  const { tableNumberId } = useParams();
   useEffect(() => {
     const loadMoreRequestedCategories = async () => {
       setLoading(true);
@@ -22,7 +23,8 @@ export const useLoadPrincipalCategoriesAndProducts = () => {
         const data = await fetchTopCategoriesAndProducts(
           restaurantId,
           numberOfProducts,
-          numberOfCategories
+          numberOfCategories,
+          tableNumberId
         );
         const topCategoriesObj = [];
         const topProductsObj = [];

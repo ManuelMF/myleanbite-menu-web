@@ -16,9 +16,9 @@ import Notification from "../components/Menu/Notification";
 const MenuOverview = () => {
   const { state } = useMenu();
   const { menu } = state;
-  const { restaurantId } = useParams();
+  const { restaurantId, tableNumberId } = useParams();
 
-  useLoadMenu(restaurantId);
+  useLoadMenu(restaurantId, tableNumberId);
 
   if (!menu) return <Loading />;
 

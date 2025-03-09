@@ -16,10 +16,10 @@ const MenuPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const { restaurantId } = useParams();
+  const { restaurantId, tableNumberId } = useParams();
   const categoryId = searchParams.get("categoryId");
 
-  useLoadMenuByCategory(restaurantId, categoryId);
+  useLoadMenuByCategory(restaurantId, categoryId, tableNumberId);
 
   if (!selectedCategory && !menu) return <Loading />;
 
