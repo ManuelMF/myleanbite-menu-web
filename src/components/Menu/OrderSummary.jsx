@@ -4,7 +4,7 @@ import { useMenu } from "../../context/MenuContext";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
 const OrderSummary = () => {
-  const { state, dispatch } = useMenu();
+  const { state, dispatch, actions } = useMenu();
   const { order } = state;
 
   const totalPrice = order.reduce(
@@ -31,7 +31,7 @@ const OrderSummary = () => {
   };
 
   const handleRemoveProduct = (product) => {
-    dispatch({ type: "REMOVE_FROM_ORDER", payload: product });
+    actions.removeFromOrder(product);
   };
 
   return (

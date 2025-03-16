@@ -40,7 +40,6 @@ const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
     return () => stompClient.deactivate();
   }, [restaurantId, tableNumberId, uuid]);
 
-  // 🔹 Funciones de envío
   const sendMessage = (destination, body) => {
     if (client) {
       client.publish({ destination, body: JSON.stringify({ ...body, uuid }) });
@@ -60,10 +59,10 @@ const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
       { ...updatedOrder, type: "UPDATE_PRODUCT_ORDER" }
     );
 
-  const removeFromOrder = (productId) =>
+  const removeFromOrder = (product) =>
     sendMessage(
       `/app/restaurant/${restaurantId}/table/${tableNumberId}/removeProduct`,
-      { productId, type: "REMOVE_FROM_ORDER" }
+      { selectedProduct: product, type: "REMOVE_FROM_ORDER" }
     );
 
   const saveCustomization = (customizationData) =>

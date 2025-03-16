@@ -61,9 +61,21 @@ function menuReducer(state, action) {
       return { ...state, order: updatedOrder };
     }
     case "REMOVE_FROM_ORDER": {
-      let order = state.order.filter(
-        (product) => product.selectedProduct.orderId != action.payload.orderId
-      );
+      if (action.sendMessage)
+        action.sendMessage({
+          ...action.payload,
+          tableNumberId: state.tableNumberId,
+          restaurantId: state.menu.restaurantId,
+        });
+
+      let order = state.order.filter((product) => {
+        if (action.payload.selectedProduct) {
+          return (
+            product.selectedProduct.orderId !=
+            action.payload.selectedProduct.orderId
+          );
+        } else return product.selectedProduct.orderId != action.payload.orderId;
+      });
 
       return { ...state, order };
     }
@@ -154,10 +166,19 @@ export const MenuProvider = ({ children }) => {
     });
   };
 
+  const removeFromOrder = (product) => {
+    dispatch({
+      type: "REMOVE_FROM_ORDER",
+      payload: product,
+      sendMessage: wsActions.removeFromOrder,
+    });
+  };
+
   // you can call to the dispatch or the actions, the actions will send the request to the other people connected
   const actions = {
     addToOrder,
     updateProductOrder,
+    removeFromOrder,
   };
 
   return (
