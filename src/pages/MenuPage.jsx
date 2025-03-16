@@ -28,7 +28,9 @@ const MenuPage = () => {
       <div className="menu-page">
         <button
           className="back-button"
-          onClick={() => navigate(`/${restaurantId}/menu/overview`)}
+          onClick={() =>
+            navigate(`/${restaurantId}/${state.tableNumberId}/menu/overview`)
+          }
         >
           <FaArrowLeft />
         </button>

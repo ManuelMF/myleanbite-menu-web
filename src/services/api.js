@@ -1,5 +1,4 @@
 export const fetchMenu = async (restaurantId, tableNumberId) => {
-  console.log("🚀 ~ fetchMenu ~ tableNumberId:", tableNumberId);
   const response = await fetch(
     `http://localhost:8080/api/menu?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
     {

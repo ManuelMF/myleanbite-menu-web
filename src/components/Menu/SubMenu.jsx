@@ -4,7 +4,7 @@ import { useMenu } from "../../context/MenuContext";
 import { generateUniqueId } from "../../utils";
 
 const SubMenu = () => {
-  const { state, dispatch } = useMenu();
+  const { state, dispatch, actions } = useMenu();
   const {
     selectedProduct,
     extrasProduct,
@@ -33,24 +33,18 @@ const SubMenu = () => {
     const totalPrice = selectedProduct.price * quantity + extrasPrice;
 
     if (isEditingProduct) {
-      dispatch({
-        type: "UPDATE_PRODUCT_ORDER",
-        payload: {
-          selectedProduct,
-          ingredients: ingredientsProduct,
-          extras: extrasProduct,
-          price: totalPrice,
-        },
+      actions.updateProductOrder({
+        selectedProduct,
+        ingredients: ingredientsProduct,
+        extras: extrasProduct,
+        price: totalPrice,
       });
     } else {
-      dispatch({
-        type: "ADD_TO_ORDER",
-        payload: {
-          selectedProduct: { ...selectedProduct, orderId: generateUniqueId() },
-          quantity,
-          ingredients: ingredientsProduct,
-          extras: extrasProduct,
-        },
+      actions.addToOrder({
+        selectedProduct: { ...selectedProduct, orderId: generateUniqueId() },
+        quantity,
+        ingredients: ingredientsProduct,
+        extras: extrasProduct,
       });
     }
 

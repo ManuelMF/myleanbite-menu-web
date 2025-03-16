@@ -10,7 +10,9 @@ const PrincipalCategories = () => {
   const navigate = useNavigate();
 
   const handleCategoryClick = (categoryId) => {
-    navigate(`/${state.menu.restaurantId}/menu?categoryId=${categoryId}`);
+    navigate(
+      `/${state.menu.restaurantId}/${state.tableNumberId}/menu?categoryId=${categoryId}`
+    );
   };
 
   const { topCategories, loading } = useLoadPrincipalCategoriesAndProducts();

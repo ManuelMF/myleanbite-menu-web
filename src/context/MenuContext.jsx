@@ -1,4 +1,6 @@
 import React, { createContext, useReducer, useContext } from "react";
+import useWebSocket from "../hooks/useWebSocket";
+import { useLocation } from "react-router-dom";
 
 // Estado inicial
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
   isSubMenuOpen: false,
   showNotification: null,
   isEditingProduct: false,
+  tableNumberId: null,
 };
 
 // Reducer para manejar acciones
@@ -19,7 +22,15 @@ function menuReducer(state, action) {
   switch (action.type) {
     case "SET_MENU":
       return { ...state, menu: action.payload };
+
     case "UPDATE_PRODUCT_ORDER": {
+      if (action.sendMessage)
+        action.sendMessage({
+          ...action.payload,
+          tableNumberId: state.tableNumberId,
+          restaurantId: state.menu.restaurantId,
+        });
+
       return {
         ...state,
         order: state.order.map((product) => {
@@ -37,8 +48,18 @@ function menuReducer(state, action) {
       };
     }
 
-    case "ADD_TO_ORDER":
-      return { ...state, order: [...state.order, action.payload] };
+    case "ADD_TO_ORDER": {
+      if (action.sendMessage)
+        action.sendMessage({
+          ...action.payload,
+          tableNumberId: state.tableNumberId,
+          restaurantId: state.menu.restaurantId,
+        });
+
+      const updatedOrder = [...state.order, action.payload];
+
+      return { ...state, order: updatedOrder };
+    }
     case "REMOVE_FROM_ORDER": {
       let order = state.order.filter(
         (product) => product.selectedProduct.orderId != action.payload.orderId
@@ -94,6 +115,8 @@ function menuReducer(state, action) {
       return { ...state, showNotification: action.payload };
     case "HIDE_NOTIFICATION":
       return { ...state, showNotification: null };
+    case "SET_TABLE_NUMBER_ID":
+      return { ...state, tableNumberId: action.payload };
     default:
       return state;
   }
@@ -104,8 +127,41 @@ const MenuContext = createContext();
 export const MenuProvider = ({ children }) => {
   const [state, dispatch] = useReducer(menuReducer, initialState);
 
+  const location = useLocation();
+  const params = location.pathname.split("/");
+  const restaurantId = params[1];
+  const tableNumberId = params[2];
+
+  const wsActions = useWebSocket({
+    restaurantId,
+    tableNumberId,
+    dispatch,
+  });
+
+  const addToOrder = (product) => {
+    dispatch({
+      type: "ADD_TO_ORDER",
+      payload: product,
+      sendMessage: wsActions.addProduct,
+    });
+  };
+
+  const updateProductOrder = (product) => {
+    dispatch({
+      type: "UPDATE_PRODUCT_ORDER",
+      payload: product,
+      sendMessage: wsActions.updateProductOrder,
+    });
+  };
+
+  // you can call to the dispatch or the actions, the actions will send the request to the other people connected
+  const actions = {
+    addToOrder,
+    updateProductOrder,
+  };
+
   return (
-    <MenuContext.Provider value={{ state, dispatch }}>
+    <MenuContext.Provider value={{ state, dispatch, actions }}>
       {children}
     </MenuContext.Provider>
   );

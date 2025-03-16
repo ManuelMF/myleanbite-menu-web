@@ -8,8 +8,8 @@ import ProtectedRoute from "./Middleware/ProtectedRoute";
 
 const App = () => {
   return (
-    <MenuProvider>
-      <Router>
+    <Router>
+      <MenuProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -33,8 +33,8 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/unauthorized" element={<NotFound />} />
         </Routes>
-      </Router>
-    </MenuProvider>
+      </MenuProvider>
+    </Router>
   );
 };
 

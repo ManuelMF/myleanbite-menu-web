@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 const CategoryList = () => {
   const { state } = useMenu();
   const navigate = useNavigate();
-
   const handleCategoryClick = (categoryId) => {
-    navigate(`/${state.menu.restaurantId}/menu?categoryId=${categoryId}`);
+    navigate(
+      `/${state.menu.restaurantId}/${state.tableNumberId}/menu?categoryId=${categoryId}`
+    );
   };
 
   const categories = state.menu.categories;
