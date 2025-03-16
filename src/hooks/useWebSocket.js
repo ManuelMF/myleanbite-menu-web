@@ -65,13 +65,7 @@ const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
       { selectedProduct: product, type: "REMOVE_FROM_ORDER" }
     );
 
-  const saveCustomization = (customizationData) =>
-    sendMessage(
-      `/app/restaurant/${restaurantId}/table/${tableNumberId}/saveCustomization`,
-      { ...customizationData, type: "SAVE_CUSTOMIZATION" }
-    );
-
-  return { addProduct, updateProductOrder, removeFromOrder, saveCustomization };
+  return { addProduct, updateProductOrder, removeFromOrder };
 };
 
 export default useWebSocket;
