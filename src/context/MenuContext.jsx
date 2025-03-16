@@ -148,6 +148,7 @@ export const MenuProvider = ({ children }) => {
     restaurantId,
     tableNumberId,
     dispatch,
+    state,
   });
 
   const addToOrder = (product) => {
