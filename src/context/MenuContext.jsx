@@ -129,6 +129,14 @@ function menuReducer(state, action) {
       return { ...state, showNotification: null };
     case "SET_TABLE_NUMBER_ID":
       return { ...state, tableNumberId: action.payload };
+    case "GET_ORDER":
+      action.payload.sendOrder({
+        order: state.order,
+        requesterUuid: action.payload.requesterUuid,
+      });
+      return state;
+    case "SET_ORDER":
+      return { ...state, order: action.payload };
     default:
       return state;
   }
