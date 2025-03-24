@@ -15,7 +15,7 @@ const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
 
     const stompClient = new Client({
       brokerURL: "ws://localhost:8080/ws",
-      debug: (msg) => console.log("🐛 WebSocket Debug:", msg),
+      //debug: (msg) => console.log("🐛 WebSocket Debug:", msg),
       onConnect: () => {
         console.log(
           `Connected to WebSocket: Restaurant ${restaurantId}, Table ${tableNumberId}, uuid ${uuid}`
@@ -31,12 +31,14 @@ const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
           (message) => {
             const orderUpdate = JSON.parse(message.body);
 
+            // Ask the order of the other cliens
             if (orderUpdate.type === "GET_ORDER" && orderUpdate.uuid !== uuid) {
               dispatch({
                 type: "GET_ORDER",
                 payload: { sendOrder, requesterUuid: orderUpdate.uuid },
               });
             } else if (
+              // Send the order of the other clients
               orderUpdate.type === "SEND_ORDER" &&
               orderUpdate.requesterUuid === uuid
             ) {

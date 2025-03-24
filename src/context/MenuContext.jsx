@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useContext } from "react";
 import useWebSocket from "../hooks/useWebSocket";
 import { useLocation } from "react-router-dom";
+import { postOrder } from "../services/api";
 
 // Estado inicial
 const initialState = {
@@ -137,6 +138,21 @@ function menuReducer(state, action) {
       return state;
     case "SET_ORDER":
       return { ...state, order: action.payload };
+    case "FINALIZE_ORDER": {
+      //TODO import the models in the proyect
+      //TODO create something like dababase to do request
+      //TODO save order in the ddbb and get the order id  and get the order id
+
+      //TODO crear una variable en initialStatus que si esta activa (se activara y desactivara cuando le demos a finalizar pedido y durara x tiempo)
+      // tendremos que crear un modal
+      //let orderId = 1;
+      postOrder(
+        action.payload.restaurantId,
+        action.payload.tableNumberId,
+        state.order
+      );
+      return { ...state, order: [] };
+    }
     default:
       return state;
   }

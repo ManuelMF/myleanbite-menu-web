@@ -56,3 +56,20 @@ export const fetchValidateToken = async (restaurantId, tableNumberId) => {
     return false;
   }
 };
+
+export const postOrder = async (restaurantId, tableNumberId, order) => {
+  console.log("🚀 ~ postOrder ~ order:", order);
+  const response = await fetch(
+    `http://localhost:8080/api/order?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    }
+  );
+  if (!response.ok) throw new Error("Error sending order");
+  return await response.json();
+};

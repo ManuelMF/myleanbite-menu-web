@@ -154,8 +154,8 @@
 
 /* Botón de finalizar pedido */
 .finish-btn {
-background: #ffc107;
-  border: 1px solid #ffc107;
+background: #E74C3C;
+  border: 1px solid #E74C3C;
   color: black;
   font-size: 1rem;
   padding: 12px 20px;
@@ -207,3 +207,7 @@ background: #ffc107;
 .icon-btn:hover {
   color: #333; 
 }
+
+
+
+
