@@ -37,19 +37,17 @@ const OrderSummary = () => {
     actions.removeFromOrder(product);
   };
 
-  // Función para finalizar el pedido, abre el modal de confirmación
   const handleFinishOrder = () => {
     if (order.length) setIsModalOpen(true);
   };
 
   const handleConfirmFinishOrder = () => {
-    // Lógica para finalizar el pedido (por ejemplo, llamada a la API)
     console.log("Pedido finalizado");
     setIsModalOpen(false);
   };
 
   const handleCancelFinishOrder = () => {
-    setIsModalOpen(false); // Cerrar el modal si el usuario cancela
+    setIsModalOpen(false);
   };
 
   return (
