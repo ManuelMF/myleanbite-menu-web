@@ -12,7 +12,6 @@ import { FaArrowLeft } from "react-icons/fa";
 
 const MenuPage = () => {
   const { state } = useMenu();
-  console.log("🚀 ~ MenuPage ~ state:", state);
   const { selectedCategory, menu } = state;
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();

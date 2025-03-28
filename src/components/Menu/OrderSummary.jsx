@@ -3,6 +3,7 @@ import "../../styles/menu/submenu.css";
 import { useMenu } from "../../context/MenuContext";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import ConfirmationModal from "./ConfirmationModal";
+import { useParams } from "react-router-dom";
 
 const OrderSummary = () => {
   const { state, dispatch, actions } = useMenu();
@@ -10,7 +11,10 @@ const OrderSummary = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const totalPrice = order.reduce(
+  const restaurantId = state.menu.restaurantId;
+  const { tableNumberId } = useParams();
+
+  const totalAmount = order.reduce(
     (total, { selectedProduct, extras, quantity }) => {
       const extrasTotal = extras
         ? extras.reduce((sum, extra) => sum + extra.price * extra.quantity, 0)
@@ -42,7 +46,15 @@ const OrderSummary = () => {
   };
 
   const handleConfirmFinishOrder = () => {
-    console.log("Pedido finalizado");
+    dispatch({
+      type: "FINALIZE_ORDER",
+      payload: {
+        restaurantId,
+        tableNumberId,
+        order: { totalAmount, orderDetails: order },
+      },
+    });
+
     setIsModalOpen(false);
   };
 
@@ -79,7 +91,7 @@ const OrderSummary = () => {
           </li>
         ))}
       </ul>
-      <p>Total: {totalPrice.toFixed(2)} €</p>
+      <p>Total: {totalAmount.toFixed(2)} €</p>
       <button className="finish-btn" onClick={handleFinishOrder}>
         Finalizar Pedido
       </button>

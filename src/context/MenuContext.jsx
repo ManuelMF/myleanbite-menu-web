@@ -139,19 +139,16 @@ function menuReducer(state, action) {
     case "SET_ORDER":
       return { ...state, order: action.payload };
     case "FINALIZE_ORDER": {
-      //TODO import the models in the proyect
-      //TODO create something like dababase to do request
-      //TODO save order in the ddbb and get the order id  and get the order id
-
-      //TODO crear una variable en initialStatus que si esta activa (se activara y desactivara cuando le demos a finalizar pedido y durara x tiempo)
-      // tendremos que crear un modal
-      //let orderId = 1;
+      let order = {
+        ...action.payload,
+        groupedTableId: initialState.tableNumberId,
+      };
       postOrder(
         action.payload.restaurantId,
         action.payload.tableNumberId,
-        state.order
+        order
       );
-      return { ...state, order: [] };
+      return { ...state }; //order: []
     }
     default:
       return state;
