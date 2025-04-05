@@ -4,6 +4,7 @@ import { useMenu } from "../../context/MenuContext";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import ConfirmationModal from "./ConfirmationModal";
 import { useParams } from "react-router-dom";
+import { mapToOrderDTO } from "../../services/orderMapper";
 
 const OrderSummary = () => {
   const { state, dispatch, actions } = useMenu();
@@ -51,7 +52,11 @@ const OrderSummary = () => {
       payload: {
         restaurantId,
         tableNumberId,
-        order: { totalAmount, orderDetails: order },
+        order: mapToOrderDTO({
+          tableNumberId,
+          order,
+          totalAmount,
+        }),
       },
     });
 

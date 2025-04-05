@@ -139,15 +139,11 @@ function menuReducer(state, action) {
     case "SET_ORDER":
       return { ...state, order: action.payload };
     case "FINALIZE_ORDER": {
-      let order = {
-        ...action.payload,
-        groupedTableId: initialState.tableNumberId,
-      };
-      postOrder(
-        action.payload.restaurantId,
-        action.payload.tableNumberId,
-        order
-      );
+      postOrder({
+        restaurantId: action.payload.restaurantId,
+        tableNumberId: action.payload.tableNumberId,
+        order: action.payload.order,
+      });
       return { ...state }; //order: []
     }
     default:

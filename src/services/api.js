@@ -57,8 +57,7 @@ export const fetchValidateToken = async (restaurantId, tableNumberId) => {
   }
 };
 
-export const postOrder = async (restaurantId, tableNumberId, order) => {
-  console.log("🚀 ~ postOrder ~ order:", order);
+export const postOrder = async ({ restaurantId, tableNumberId, order }) => {
   const response = await fetch(
     `http://localhost:8080/api/order?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
     {
