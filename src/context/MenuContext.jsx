@@ -130,7 +130,7 @@ function menuReducer(state, action) {
     case "HIDE_NOTIFICATION":
       return { ...state, showNotification: null };
     case "SHOW_NOTIFICATION_PUSH_ORDER":
-      return { ...state, showNotificationPushOrder: action.payload };
+      return { ...state, showNotificationPushOrder: true };
     case "HIDE_NOTIFICATION_PUSH_ORDER":
       return { ...state, showNotificationPushOrder: false };
     case "SET_TABLE_NUMBER_ID":
@@ -144,6 +144,12 @@ function menuReducer(state, action) {
     case "SET_ORDER":
       return { ...state, order: action.payload };
     case "FINALIZE_ORDER": {
+      if (action.sendMessage)
+        action.sendMessage({
+          tableNumberId: state.tableNumberId,
+          restaurantId: state.menu.restaurantId,
+        });
+
       postOrder({
         restaurantId: action.payload.restaurantId,
         tableNumberId: action.payload.tableNumberId,
@@ -151,6 +157,11 @@ function menuReducer(state, action) {
       });
       return { ...state, order: [] };
     }
+    case "DELETE_ORDER": {
+      // use this action when one device finalize an order and we have to delete the order for the rest
+      return { ...state, order: [], showNotificationPushOrder: true };
+    }
+
     default:
       return state;
   }
@@ -197,11 +208,20 @@ export const MenuProvider = ({ children }) => {
     });
   };
 
+  const finalizeOrder = (payload) => {
+    dispatch({
+      type: "FINALIZE_ORDER",
+      payload,
+      sendMessage: wsActions.deleteOrder,
+    });
+  };
+
   // you can call to the dispatch or the actions, the actions will send the request to the other people connected
   const actions = {
     addToOrder,
     updateProductOrder,
     removeFromOrder,
+    finalizeOrder,
   };
 
   return (

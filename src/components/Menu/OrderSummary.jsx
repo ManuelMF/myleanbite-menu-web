@@ -46,20 +46,17 @@ const OrderSummary = () => {
   };
 
   const handleConfirmFinishOrder = () => {
-    dispatch({
-      type: "FINALIZE_ORDER",
-      payload: {
-        restaurantId,
+    actions.finalizeOrder({
+      restaurantId,
+      tableNumberId,
+      order: mapToOrderDTO({
         tableNumberId,
-        order: mapToOrderDTO({
-          tableNumberId,
-          order,
-          totalAmount,
-        }),
-      },
+        order,
+        totalAmount,
+      }),
     });
 
-    dispatch({ type: "SHOW_NOTIFICATION_PUSH_ORDER", payload: true });
+    dispatch({ type: "SHOW_NOTIFICATION_PUSH_ORDER" });
 
     setTimeout(() => dispatch({ type: "HIDE_NOTIFICATION_PUSH_ORDER" }), 3000);
 

@@ -43,6 +43,16 @@ const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
               orderUpdate.requesterUuid === uuid
             ) {
               dispatch({ type: "SET_ORDER", payload: orderUpdate.order });
+            } else if (
+              orderUpdate.uuid !== uuid &&
+              orderUpdate.type === "DELETE_ORDER"
+            ) {
+              // specific case to can manage the set Timeout to hide the notification order
+              setTimeout(
+                () => dispatch({ type: "HIDE_NOTIFICATION_PUSH_ORDER" }),
+                3000
+              );
+              dispatch({ type: orderUpdate.type, payload: orderUpdate });
             } else if (orderUpdate.uuid !== uuid) {
               dispatch({ type: orderUpdate.type, payload: orderUpdate });
             }
@@ -96,7 +106,20 @@ const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
     );
   };
 
-  return { addProduct, updateProductOrder, removeFromOrder, sendOrder };
+  //when we post an order we only want post one time for the rest of the people we delete the order
+  const deleteOrder = () =>
+    sendMessage(
+      `/app/restaurant/${restaurantId}/table/${tableNumberId}/deleteOrder`,
+      { type: "DELETE_ORDER" }
+    );
+
+  return {
+    addProduct,
+    updateProductOrder,
+    removeFromOrder,
+    sendOrder,
+    deleteOrder,
+  };
 };
 
 export default useWebSocket;

@@ -1,6 +1,6 @@
 import { useMenu } from "../../context/MenuContext";
 
-const Notificacion = () => {
+const NotificacionPostOrder = () => {
   const { state } = useMenu();
   const { showNotificationPushOrder } = state;
 
@@ -23,4 +23,4 @@ const Notificacion = () => {
   );
 };
 
-export default Notificacion;
+export default NotificacionPostOrder;
