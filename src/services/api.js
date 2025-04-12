@@ -70,5 +70,5 @@ export const postOrder = async ({ restaurantId, tableNumberId, order }) => {
     }
   );
   if (!response.ok) throw new Error("Error sending order");
-  return await response.json();
+  return response.status;
 };

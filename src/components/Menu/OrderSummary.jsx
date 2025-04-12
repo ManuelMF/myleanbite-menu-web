@@ -12,8 +12,7 @@ const OrderSummary = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const restaurantId = state.menu.restaurantId;
-  const { tableNumberId } = useParams();
+  const { tableNumberId, restaurantId } = useParams();
 
   const totalAmount = order.reduce(
     (total, { selectedProduct, extras, quantity }) => {
@@ -59,6 +58,10 @@ const OrderSummary = () => {
         }),
       },
     });
+
+    dispatch({ type: "SHOW_NOTIFICATION_PUSH_ORDER", payload: true });
+
+    setTimeout(() => dispatch({ type: "HIDE_NOTIFICATION_PUSH_ORDER" }), 3000);
 
     setIsModalOpen(false);
   };

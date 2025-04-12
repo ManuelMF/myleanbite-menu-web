@@ -16,6 +16,7 @@ const initialState = {
   showNotification: null,
   isEditingProduct: false,
   tableNumberId: null,
+  showNotificationPushOrder: false,
 };
 
 // Reducer para manejar acciones
@@ -128,6 +129,10 @@ function menuReducer(state, action) {
       return { ...state, showNotification: action.payload };
     case "HIDE_NOTIFICATION":
       return { ...state, showNotification: null };
+    case "SHOW_NOTIFICATION_PUSH_ORDER":
+      return { ...state, showNotificationPushOrder: action.payload };
+    case "HIDE_NOTIFICATION_PUSH_ORDER":
+      return { ...state, showNotificationPushOrder: false };
     case "SET_TABLE_NUMBER_ID":
       return { ...state, tableNumberId: action.payload };
     case "GET_ORDER":
@@ -144,7 +149,7 @@ function menuReducer(state, action) {
         tableNumberId: action.payload.tableNumberId,
         order: action.payload.order,
       });
-      return { ...state }; //order: []
+      return { ...state, order: [] };
     }
     default:
       return state;

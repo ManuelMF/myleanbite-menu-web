@@ -12,6 +12,7 @@ import SubMenuWrapper from "../components/Menu/SubMenuWrapper";
 import CustomizeMenu from "../components/Menu/CustomizeMenu";
 import OrderSummary from "../components/Menu/OrderSummary";
 import Notification from "../components/Menu/Notification";
+import NotificationPostOrder from "../components/Menu/NotificationPostOrder";
 
 const MenuOverview = () => {
   const { state } = useMenu();
@@ -34,6 +35,7 @@ const MenuOverview = () => {
       <SubMenuWrapper />
       <CustomizeMenu />
       <Notification />
+      <NotificationPostOrder />
 
       <OrderSummary />
     </div>
