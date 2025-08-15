@@ -1,9 +1,8 @@
-import { getDatabaseUrl } from "../utils";
+import { getHubUrl } from "../utils";
 
 export const fetchMenu = async (restaurantId, tableNumberId) => {
-  getDatabaseUrl();
   const response = await fetch(
-    `http://${getDatabaseUrl()}/api/menu?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
+    `${getHubUrl()}/api/menu?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
     {
       credentials: "include",
     }
@@ -18,7 +17,7 @@ export const fetchMenuByCategory = async (
   tableNumberId
 ) => {
   const response = await fetch(
-    `http://${getDatabaseUrl()}/api/menu?restaurantId=${restaurantId}&categoryId=${categoryId}&tableNumberId=${tableNumberId}`,
+    `${getHubUrl()}/api/menu?restaurantId=${restaurantId}&categoryId=${categoryId}&tableNumberId=${tableNumberId}`,
     {
       credentials: "include",
     }
@@ -34,7 +33,7 @@ export const fetchTopCategoriesAndProducts = async (
   tableNumberId
 ) => {
   const response = await fetch(
-    `http://${getDatabaseUrl()}/api/menu/top-categories-products?restaurantId=${restaurantId}&numberOfProducts=${numberProducts}&numberOfCategories=${numberCategories}&tableNumberId=${tableNumberId}`,
+    `${getHubUrl()}/api/menu/top-categories-products?restaurantId=${restaurantId}&numberOfProducts=${numberProducts}&numberOfCategories=${numberCategories}&tableNumberId=${tableNumberId}`,
     {
       credentials: "include",
     }
@@ -47,7 +46,7 @@ export const fetchTopCategoriesAndProducts = async (
 export const fetchValidateToken = async (restaurantId, tableNumberId) => {
   try {
     const response = await fetch(
-      `http://${getDatabaseUrl()}/api/validate?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
+      `${getHubUrl()}/api/validate?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
       {
         credentials: "include",
       }
@@ -62,7 +61,7 @@ export const fetchValidateToken = async (restaurantId, tableNumberId) => {
 
 export const postOrder = async ({ restaurantId, tableNumberId, order }) => {
   const response = await fetch(
-    `http://${getDatabaseUrl()}/api/order?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
+    `${getHubUrl()}/api/order?restaurantId=${restaurantId}&tableNumberId=${tableNumberId}`,
     {
       method: "POST",
       credentials: "include",

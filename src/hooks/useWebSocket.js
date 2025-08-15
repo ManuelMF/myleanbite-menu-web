@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { Client } from "@stomp/stompjs";
-import { generateUniqueId, getDatabaseUrl } from "../utils";
+import {
+  generateUniqueId,
+  getHubBaseUrl,
+  getWebSocketProtocol,
+} from "../utils";
 
 const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
   const [uuid, setUuid] = useState(null);
@@ -13,7 +17,7 @@ const useWebSocket = ({ restaurantId, tableNumberId, dispatch }) => {
   useEffect(() => {
     if (!restaurantId || !tableNumberId || !uuid) return;
     const stompClient = new Client({
-      brokerURL: `ws://${getDatabaseUrl()}/ws`,
+      brokerURL: `${getWebSocketProtocol()}://${getHubBaseUrl()}/ws`,
       //debug: (msg) => console.log("🐛 WebSocket Debug:", msg),
       onConnect: () => {
         console.log(
