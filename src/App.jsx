@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import MenuPage from "./pages/MenuPage";
 import MenuOverview from "./pages/MenuOverview";
 import NotFound from "./pages/NotFound";
+import Unauthorized from "./pages/Unauthorized";
 import ProtectedRoute from "./Middleware/ProtectedRoute";
 
 const App = () => {
@@ -30,8 +31,8 @@ const App = () => {
             }
           />
 
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/unauthorized" element={<NotFound />} />
         </Routes>
       </MenuProvider>
     </Router>
