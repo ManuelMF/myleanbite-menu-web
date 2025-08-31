@@ -1,5 +1,3 @@
-import React from "react";
-
 const container = {
   minHeight: "100vh",
   display: "flex",
@@ -19,25 +17,10 @@ const card = {
   color: "#1f2937",
 };
 
-const buttonSecondary = {
-  display: "inline-flex",
-  gap: "8px",
-  padding: "10px 18px",
-  background: "#fff",
-  color: "#374151",
-  border: "1px solid #e5e7eb",
-  borderRadius: "10px",
-  cursor: "pointer",
-};
-
-const UnauthorizedPage = ({
-  onLogout,
-  supportEmail = "soporte@myleanbite.com",
-}) => {
+const UnauthorizedPage = ({}) => {
   return (
     <div style={container}>
       <div style={card}>
-        {/* Cabecera con icono de advertencia */}
         <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
           <div
             style={{ background: "#fff5f5", borderRadius: "50%", padding: 10 }}
@@ -69,7 +52,6 @@ const UnauthorizedPage = ({
           </div>
         </div>
 
-        {/* Instrucciones */}
         <div style={{ marginTop: 18 }}>
           <div style={{ marginBottom: 10 }}>
             <strong>Paso 1:</strong> Abre la cámara de tu móvil.
