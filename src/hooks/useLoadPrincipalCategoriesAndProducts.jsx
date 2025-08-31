@@ -34,7 +34,10 @@ export const useLoadPrincipalCategoriesAndProducts = () => {
           }
 
           category.products.map((product) => {
-            if (data.topProducts.includes(product.posId)) {
+            if (
+              data.topProducts.includes(product.posId) &&
+              topProductsObj.length < numberOfProducts // cases with products with the same posId
+            ) {
               topProductsObj.push(product);
             }
           });
