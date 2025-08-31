@@ -1,10 +1,17 @@
 import "../../styles/menuOverview/menuOverview.css";
+import usePreloadImage from "../../hooks/usePreloadImage";
 
-const Header = () => {
+const Header = ({ imageUrl }) => {
+  usePreloadImage(imageUrl);
+
   return (
-    <div className="logo-container">
-      <img src="/logo.png" alt="Restaurant Logo" className="logo" />
-    </div>
+    <>
+      {imageUrl && (
+        <div className="logo-container">
+          <img src={imageUrl} alt="Logo preview" />
+        </div>
+      )}
+    </>
   );
 };
 

@@ -51,19 +51,6 @@ const UnauthorizedPage = ({}) => {
             </p>
           </div>
         </div>
-
-        <div style={{ marginTop: 18 }}>
-          <div style={{ marginBottom: 10 }}>
-            <strong>Paso 1:</strong> Abre la cámara de tu móvil.
-          </div>
-          <div>
-            <strong>Paso 2:</strong> Escanea el código QR que tienes en la mesa.
-          </div>
-          <div style={{ marginTop: 10 }}>
-            <strong>Paso 3:</strong> Espera la confirmación: se generará un
-            nuevo acceso automáticamente.
-          </div>
-        </div>
       </div>
     </div>
   );

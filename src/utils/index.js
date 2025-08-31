@@ -7,7 +7,7 @@ export function getHubUrl() {
 
   if (env === "production") {
     return "https://api.myleanbite.com";
-  } else if (env === "staging") {
+  } else if (env === "preproduction") {
     return "http://localhost:8080";
   } else {
     return "http://localhost:8080";
@@ -19,10 +19,22 @@ export function getHubBaseUrl() {
 
   if (env === "production") {
     return "api.myleanbite.com";
-  } else if (env === "staging") {
+  } else if (env === "preproduction") {
     return "localhost:8080";
   } else {
     return "localhost:8080";
+  }
+}
+
+export function getDashboardApiUrl() {
+  const env = import.meta.env.VITE_ENV;
+
+  if (env === "production") {
+    return "https://dashboard.api.myleanbite.com";
+  } else if (env === "preproduction") {
+    return "https://dashboard.api.myleanbite.com";
+  } else {
+    return "http://localhost:8001";
   }
 }
 
