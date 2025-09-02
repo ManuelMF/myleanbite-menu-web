@@ -17,7 +17,7 @@ const SplashScreen = ({ imageUrl }) => {
     localStorage.setItem("hasSeenSplash", "true");
   };
 
-  if (!visible) return null;
+  if (!visible || !imageUrl) return null;
 
   return (
     <div className="splash-screen" onClick={handleClick}>

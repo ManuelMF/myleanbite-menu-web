@@ -155,17 +155,17 @@
 
 /* Footer del submenu */
 .submenu-footer { 
-  padding: 0;
+  display: flex;
+  overflow: hidden; /* corta cualquier radio que sobresalga */
+  border-radius: 0; /* elimina el redondeo del footer */
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  box-sizing: border-box;
-  justify-content: center;
+  box-sizing: border-box;/* elimina el redondeo del footer */
 }
-.cancel-btn,
 .add-btn {
-  width: 50%;
+  width: 51%;
   padding: 10px 0;
   font-size: 1rem;
   cursor: pointer;
@@ -173,21 +173,34 @@
   box-sizing: border-box;
   border-radius: 0;
 }
-.cancel-btn{
-  border-bottom-left-radius: 10px;
-}
+
 .add-btn {
   border-bottom-right-radius: 10px; 
 }
 
 .cancel-btn {
+  width: 50%;
+  padding: 10px 0;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0;
+  box-sizing: border-box;
+
   background: white;
   border: 1px solid #ccc;
   color: black;
+  border-top-left-radius: 0;      /* arriba izquierda recto */
+  border-top-right-radius: 0;     /* arriba derecha recto */
+  border-bottom-right-radius: 0;  /* abajo derecha recto */
+  border-bottom-left-radius: 10px; /* abajo izquierda redondeado */
 }
 
 .add-btn {
   background: #ffc107;
   border: 1px solid #ffc107;
   color: black;
+}
+.cancel-btn {
+ 
+  margin-right: -2px; /* quita el pequeño espacio que da redondeo */
 }

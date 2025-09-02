@@ -1,3 +1,3 @@
-const Loading = () => <div className="loading">Cargando menú...</div>;
+const Loading = () => <div className="loading"></div>;
 
 export default Loading;
